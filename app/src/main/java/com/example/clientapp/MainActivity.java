@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     //Toolbar
     Toolbar toolbar;
 
     LinearLayout walletBtn;
+    LinearLayout bikeBtn;
 //    ImageButton walletBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
 //                Intent i=new Intent(MainActivity.this,walletActivity.class);
                 Intent i=new Intent(MainActivity.this,walletActivity.class);
                 startActivity(i);
+            }
+        });
+        bikeBtn=findViewById(R.id.addVehicle);
+        bikeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this,"Bike selected",Toast.LENGTH_SHORT).show();
             }
         });
     }
