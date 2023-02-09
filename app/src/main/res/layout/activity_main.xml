@@ -147,6 +147,7 @@
                                     android:layout_height="match_parent"
                                     android:background="@drawable/cardview_background"
                                     android:gravity="center"
+                                    android:id="@+id/transaction"
                                     android:orientation="vertical">
 
                                         <ImageView

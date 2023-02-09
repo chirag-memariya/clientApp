@@ -15,12 +15,13 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     LinearLayout walletBtn;
-    LinearLayout bikeBtn;
+    LinearLayout bikeBtn,logBtn;
 //    ImageButton walletBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        VehicleNumber.initVehicleNumbers();
 
 
         //Toolbar
@@ -62,11 +63,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
         bikeBtn=findViewById(R.id.addVehicle);
         bikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,AddVehicle.class);
+                startActivity(i);
                 Toast.makeText(MainActivity.this,"Bike selected",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        logBtn=findViewById(R.id.transaction);
+        logBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,LogsActivity.class);
+                startActivity(i);
             }
         });
     }
