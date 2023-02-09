@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/homepage_background_style"
+    android:background="@drawable/wallet_background"
     tools:context=".MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/home_page_toolbarstyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
-                    android:background="@drawable/home_page_toolbarstyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_banner">
 
 
                 </androidx.appcompat.widget.Toolbar>
@@ -56,6 +57,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="5dp"
                     android:alignmentMode="alignMargins"
+
                     android:columnCount="2"
                     android:columnOrderPreserved="false"
                     android:rowCount="4">
@@ -65,13 +67,14 @@
                             android:layout_width="170dp"
                             android:layout_height="170dp"
                             android:layout_margin="10dp"
-                            app:cardBackgroundColor="@color/gray"
+                            android:background="@drawable/background_banner"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="5dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:background="@drawable/cardview_background"
                                     android:gravity="center"
                                     android:orientation="vertical">
 
@@ -99,7 +102,7 @@
                             android:layout_width="170dp"
                             android:layout_height="170dp"
                             android:layout_margin="10dp"
-                            app:cardBackgroundColor="@color/gray"
+                            app:cardBackgroundColor="#FAE0C9"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="5dp">
 
@@ -107,6 +110,7 @@
                                     android:id="@+id/wallet"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:background="@drawable/cardview_background"
                                     android:clickable="true"
                                     android:gravity="center"
                                     android:orientation="vertical">
@@ -134,13 +138,14 @@
                             android:layout_width="170dp"
                             android:layout_height="170dp"
                             android:layout_margin="10dp"
-                            app:cardBackgroundColor="@color/gray"
+                            app:cardBackgroundColor="#B1ECF1"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="5dp">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:background="@drawable/cardview_background"
                                     android:gravity="center"
                                     android:orientation="vertical">
 
@@ -168,14 +173,15 @@
                             android:layout_width="170dp"
                             android:layout_height="170dp"
                             android:layout_margin="10dp"
-                            app:cardBackgroundColor="@color/gray"
+                            app:cardBackgroundColor="#FAE0C9"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="5dp">
 
                                 <LinearLayout
-                                    android:layout_width="match_parent"
                                     android:id="@+id/addVehicle"
+                                    android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:background="@drawable/cardview_background"
                                     android:gravity="center"
                                     android:orientation="vertical">
 
