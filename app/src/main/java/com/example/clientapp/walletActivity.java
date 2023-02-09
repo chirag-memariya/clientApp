@@ -23,7 +23,28 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class walletActivity extends AppCompatActivity {
 
+/*
 
+package com.example.clientapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+public class Wallet_Upadate extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_wallet_upadate);
+
+
+    }
+}
+
+
+
+*/
 
 
     ArrayList<data> datas;

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".MainActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -27,24 +27,14 @@ tools:context=".MainActivity"
         android:background="@drawable/rounded_style"
         >
 
-        <TextView
-            android:id="@+id/currencyT"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/baseline_currency_rupee"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/guideline10"
-            app:layout_constraintEnd_toStartOf="@+id/guideline9"
-            app:layout_constraintHorizontal_bias="0.127"
-            app:layout_constraintStart_toStartOf="@+id/guideline11"></TextView>
+
 
         <TextView
             android:id="@+id/amountT"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:text="0.333"
+            android:layout_width="180dp"
+            android:layout_height="37dp"
+            android:text="0.333 rupee"
+            android:fontFamily="@font/googlesans_mediumitalic"
             android:textSize="30dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/guideline10"
@@ -60,7 +50,7 @@ tools:context=".MainActivity"
             android:layout_height="44dp"
             android:text="Wallet Balance"
             android:textSize="30dp"
-            android:textStyle="bold"
+            android:fontFamily="@font/googlesans_regular"
             app:layout_constraintBottom_toTopOf="@+id/guideline8"
             app:layout_constraintEnd_toStartOf="@+id/guideline9"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -113,7 +103,7 @@ tools:context=".MainActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="128dp" />
+            app:layout_constraintGuide_begin="190dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -192,13 +182,13 @@ tools:context=".MainActivity"
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addBtn"
-        android:layout_width="match_parent"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@drawable/rounded_style"
         android:gravity="center"
-        android:text="Add Buttton"
-        android:textSize="30dp"
+        android:text="Add Balance"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

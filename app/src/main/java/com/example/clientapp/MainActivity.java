@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                Intent i=new Intent(MainActivity.this,walletActivity.class);
-                Intent i=new Intent(MainActivity.this,walletActivity.class);
+                Intent i=new Intent(MainActivity.this,Wallet_Upadate.class);
                 startActivity(i);
             }
         });
