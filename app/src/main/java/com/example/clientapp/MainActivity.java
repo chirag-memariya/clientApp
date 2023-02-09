@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         //step -2
         if(getSupportActionBar()!=null){
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Custom_Toolbar_Name");
+            getSupportActionBar().setTitle("Client Application");
+
         }
 
         //set toolbar title

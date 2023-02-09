@@ -15,6 +15,7 @@
  import android.view.MenuInflater;
  import android.view.MenuItem;
  import android.view.MotionEvent;
+ import android.widget.Button;
  import android.widget.Toast;
 
  import java.util.ArrayList;
@@ -31,6 +32,8 @@
 
  Toolbar toolbar;
 
+ public  Button btn1;
+
 
 
 
@@ -38,6 +41,15 @@
  protected void onCreate(Bundle savedInstanceState) {
  super.onCreate(savedInstanceState);
  setContentView(R.layout.activity_wallet_upadate);
+
+
+ //button touched
+  btn1=findViewById(R.id.message_button);
+
+
+
+
+
 
  //recycler view
  // Lookup the recyclerview in activity layout
