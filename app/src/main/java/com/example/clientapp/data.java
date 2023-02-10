@@ -58,8 +58,10 @@ public class data extends Context {
     public static ArrayList<data> createdatasList(int numdatas) {
         ArrayList<data> datas = new ArrayList<data>();
 
+
+
         for (int i = 1; i <= numdatas; i++) {
-            datas.add(new data("Transaction " + ++lastdataId, i <= numdatas / 2));
+            datas.add(new data("Eva Mall " + ++lastdataId, i <= numdatas / 2));
         }
 
         return datas;

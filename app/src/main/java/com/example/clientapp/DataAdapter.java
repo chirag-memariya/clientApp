@@ -44,7 +44,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         TextView textView = holder.nameTextView;
         textView.setText(contact.getName());
         Button button = holder.messageButton;
-        button.setText(contact.isOnline() ? "Credited" : "Debited");
+        button.setText(contact.isOnline() ? "-10" : "+29");
         button.setEnabled(contact.isOnline());
     }
 

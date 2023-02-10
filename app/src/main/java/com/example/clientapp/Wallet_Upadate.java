@@ -1,5 +1,9 @@
  package com.example.clientapp;
 
+ import androidx.activity.result.ActivityResult;
+ import androidx.activity.result.ActivityResultCallback;
+ import androidx.activity.result.ActivityResultLauncher;
+ import androidx.activity.result.contract.ActivityResultContracts;
  import androidx.annotation.NonNull;
  import androidx.appcompat.app.AppCompatActivity;
  import androidx.appcompat.widget.Toolbar;
@@ -10,12 +14,19 @@
  import androidx.recyclerview.widget.SnapHelper;
 
 
+ import android.animation.Animator;
+ import android.app.Instrumentation;
+ import android.content.Intent;
  import android.os.Bundle;
  import android.view.Menu;
  import android.view.MenuInflater;
  import android.view.MenuItem;
  import android.view.MotionEvent;
+ import android.view.View;
+ import android.view.animation.Animation;
+ import android.view.animation.AnimationUtils;
  import android.widget.Button;
+ import android.widget.TextView;
  import android.widget.Toast;
 
  import java.util.ArrayList;
@@ -32,8 +43,11 @@
 
  Toolbar toolbar;
 
- public  Button btn1;
+ //text add money button
+  TextView addMoney;
+  Animation scaleUp,scaleDown;
 
+  ActivityResultLauncher<Intent> activityResultLauncher;
 
 
 
@@ -43,8 +57,59 @@
  setContentView(R.layout.activity_wallet_upadate);
 
 
- //button touched
-  btn1=findViewById(R.id.message_button);
+ //add money text view
+  addMoney=findViewById(R.id.addMoney);
+  scaleUp= AnimationUtils.loadAnimation(this,R.anim.scale_up);
+
+  scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down);
+
+  addMoney.setOnTouchListener(new View.OnTouchListener() {
+   @Override
+   public boolean onTouch(View view, MotionEvent motionEvent) {
+    if(motionEvent.getAction()==MotionEvent.ACTION_UP){
+     addMoney.startAnimation(scaleUp);
+
+    } else if (motionEvent.getAction()==MotionEvent.ACTION_DOWN) {
+     addMoney.startAnimation(scaleDown);
+    }
+    return false;
+   }
+  });
+
+  addMoney.setOnClickListener(new View.OnClickListener() {
+   @Override
+   public void onClick(View view) {
+
+
+    Intent intent=new Intent(getApplicationContext(),add_balance.class);
+//    Bundle bundle=new Bundle();
+//    bundle.putInt("number1",10);
+//
+//    intent.putExtras(bundle);
+    startActivity(intent);
+   }
+  });
+
+//  activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+//   @Override
+//   public void onActivityResult(ActivityResult result) {
+//    if (result.getResultCode()== RESULT_OK)
+//    {
+//     Intent intent = result.getData();
+//     int added = intent.getIntExtra("added", -1);
+//     Toast.makeText(getApplicationContext(), added+" money added", Toast.LENGTH_SHORT).show();
+//    }
+//   }
+//  });
+
+
+
+
+
+
+
+  //button touched
+//  btn1=findViewById(R.id.message_button);
 
 
 
@@ -69,9 +134,9 @@
  datas.addAll(data.createdatasList(5));
 
  // Add a new contact
- datas.add(0, new data("Barney", true));
- // Notify the adapter that an item was inserted at position 0
- adapter.notifyItemInserted(0);
+// datas.add(0, new data("Barney", true));
+// // Notify the adapter that an item was inserted at position 0
+// adapter.notifyItemInserted(0);
 
 
  RecyclerView.ItemDecoration itemDecoration = new
