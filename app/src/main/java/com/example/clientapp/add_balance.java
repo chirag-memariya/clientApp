@@ -84,19 +84,37 @@ public class add_balance extends AppCompatActivity {
 
         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
 
-        String amount="";
-        amount=setData(databaseReference,Tbalance);
+
+        setData(databaseReference,Tbalance);
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String added_amoount=editTextAddAmount.getText().toString();
-
+                int editAmount=Integer.parseInt(added_amoount);
                 if(added_amoount.isEmpty()){
                     Toast.makeText(add_balance.this, "Please Enter a Amount!!", Toast.LENGTH_SHORT).show();
                 }else{
-                    FirebaseDatabase.getInstance().getReference("programing knowladge").child("Balance").setValue(added_amoount);
-                    Toast.makeText(add_balance.this, "Rs. "+added_amoount+" added", Toast.LENGTH_SHORT).show();
-                    finish();
+
+
+
+                    //set data
+                    DatabaseReference databaseReference1=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
+                    databaseReference1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int value = snapshot.child("amt").getValue(Integer.class);  //-->>>> retrieved from  database
+                            FirebaseDatabase.getInstance().getReference("programing knowladge").child("amt").setValue(value+editAmount);
+                            Toast.makeText(add_balance.this, "Rs. "+added_amoount+" added", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+
                 }
             }
         });
@@ -194,14 +212,12 @@ public class add_balance extends AppCompatActivity {
 
 
     //for read data into a firebase
-    private String setData(@NonNull DatabaseReference databaseReference, TextView tbalance){
-        String str="";
+    private int setData(@NonNull DatabaseReference databaseReference, TextView tbalance){
         databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String value = snapshot.child("Balance").getValue(String.class);  //-->>>> retrieved from  database
-//                tbalance.setText(value+" .Cr");
+            public void onDataChange( DataSnapshot snapshot) {
+                int value = snapshot.child("amt").getValue(Integer.class);
+                tbalance.setText(value+" .Cr");
                 Toast.makeText(add_balance.this, "Rs. "+value+" added", Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -209,7 +225,6 @@ public class add_balance extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
             }
         });
-        return "1er";
     }
 
 }
