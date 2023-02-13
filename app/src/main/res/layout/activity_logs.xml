@@ -39,18 +39,16 @@
             android:gravity="center_vertical"
                   />
 
-        <Spinner
-            android:id="@+id/selectCategoeryspinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:spinnerMode="dialog"
-
-
-            />
+            <Spinner
+                android:id="@+id/selectCategoeryspinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

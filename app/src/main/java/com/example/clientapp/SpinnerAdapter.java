@@ -19,6 +19,7 @@ public class SpinnerAdapter extends ArrayAdapter<VehicleNumber> {
     public SpinnerAdapter(@NonNull Context context,int resource, @NonNull List<VehicleNumber> vehicleNumbers) {
         super(context, resource, vehicleNumbers);
         layoutInflater=LayoutInflater.from(context);
+
     }
 
 
@@ -40,6 +41,7 @@ public class SpinnerAdapter extends ArrayAdapter<VehicleNumber> {
         VehicleNumber vehicleNumber=getItem(position);
                 TextView spinnerTxtView=convertView.findViewById(R.id.spinnerTextView);
         spinnerTxtView.setText(vehicleNumber.getNumber());
+
         return convertView;
     }
 }

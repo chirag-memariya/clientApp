@@ -5,6 +5,8 @@
         <item>Bike</item>
         <item>Car</item>
     </string-array>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    -->
     <!--    <item name="savingT" type="id">savingTextView</item>-->
     <!--    <item name="amountT" type="id">amountTextView</item>-->
