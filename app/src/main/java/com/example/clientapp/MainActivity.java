@@ -8,23 +8,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     //Toolbar
     Toolbar toolbar;
-
+    TextView displau_user;
     LinearLayout walletBtn;
+    String Current_user;
     LinearLayout bikeBtn,logBtn;
 //    ImageButton walletBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         VehicleNumber.initVehicleNumbers();
 
 
         //Toolbar
+        displau_user = findViewById(R.id.display_username);
+        Current_user = global_username.getUsername();
+        displau_user.setText("Hello "+ Current_user);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //        setSupportActionBar(toolbar);
@@ -86,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void profile_click(View view){
+
+        Intent i = new Intent(getApplicationContext(), User_Profile.class);
+        startActivity(i);
+    }
 
 
 
