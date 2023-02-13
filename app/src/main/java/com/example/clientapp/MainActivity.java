@@ -35,15 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Add or write a data to the database system
-        FirebaseDatabase.getInstance().getReference().child("programing knowladge").child("android").setValue("abcd");
-
-        //create a more than one child
-        HashMap<String,Object> stringHashMap=new HashMap<>();
-        stringHashMap.put("Name","Chirag");
-        stringHashMap.put("Email","memariyachirag@gmail.com");
-
-        FirebaseDatabase.getInstance().getReference().child("programing knowladge").child("Multiple Values").updateChildren(stringHashMap);
-
+//        FirebaseDatabase.getInstance().getReference().child("programing knowladge").child("android").setValue("abcd");
+//
+//        //create a more than one child
+//        HashMap<String,Object> stringHashMap=new HashMap<>();
+//        stringHashMap.put("Name","Chirag");
+//        stringHashMap.put("Email","memariyachirag@gmail.com");
+//
+//        FirebaseDatabase.getInstance().getReference().child("programing knowladge").child("Multiple Values").updateChildren(stringHashMap);
+//        FirebaseDatabase.getInstance().getReference().child("Languages").child("n1").setValue("java");
 
 
 

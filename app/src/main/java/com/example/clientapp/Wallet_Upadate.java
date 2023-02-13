@@ -15,6 +15,7 @@
 
 
  import android.animation.Animator;
+ import android.annotation.SuppressLint;
  import android.app.Instrumentation;
  import android.content.Intent;
  import android.os.Bundle;
@@ -29,13 +30,17 @@
  import android.widget.TextView;
  import android.widget.Toast;
 
+ import com.google.firebase.database.DataSnapshot;
+ import com.google.firebase.database.DatabaseError;
+ import com.google.firebase.database.DatabaseReference;
+ import com.google.firebase.database.FirebaseDatabase;
+ import com.google.firebase.database.ValueEventListener;
+
  import java.util.ArrayList;
 
  import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
  public class Wallet_Upadate extends AppCompatActivity {
-
-
 
  ArrayList<data> datas;
 
@@ -45,6 +50,7 @@
 
  //text add money button
   TextView addMoney;
+  TextView textViewBalance;
   Animation scaleUp,scaleDown;
 
   ActivityResultLauncher<Intent> activityResultLauncher;
@@ -61,7 +67,34 @@
   addMoney=findViewById(R.id.addMoney);
   scaleUp= AnimationUtils.loadAnimation(this,R.anim.scale_up);
 
+
   scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down);
+
+
+  textViewBalance=findViewById(R.id.textViewBalance);
+  //##// firebase
+  // creating a variable for
+  // our Firebase Database.
+  FirebaseDatabase firebaseDatabase;
+
+  // creating a variable for our
+  // Database Reference for Firebase.
+  DatabaseReference databaseReference;
+  firebaseDatabase = FirebaseDatabase.getInstance();
+
+  // below line is used to get
+  // reference for our database.
+  databaseReference = firebaseDatabase.getReference("Balance");
+
+  ///--here
+  int total_balance=30;
+//  total_balance=setData(databaseReference,textViewBalance);
+
+
+
+
+
+
 
   addMoney.setOnTouchListener(new View.OnTouchListener() {
    @Override
@@ -187,6 +220,46 @@
  getSupportActionBar().setTitle("WalletPage");
  //        }
  }
+
+
+
+  //for read data into a firebase
+  private int setData(@NonNull DatabaseReference databaseReference, TextView tbalance){
+
+   int[] total_balance = {0};
+   databaseReference.addValueEventListener(new ValueEventListener() {
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onDataChange(@NonNull DataSnapshot snapshot) {
+     // this method is call to get the realtime
+     // updates in the data.
+     // this method is called when the data is
+     // changed in our Firebase console.
+     // below line is for getting the data from
+     // snapshot of our database.
+     int value = Integer.parseInt(snapshot.getValue(String.class));  //-->>>> retrieved from  database
+     // after getting the value we are setting
+     // our value to our text view in below line.
+     total_balance[0] =value;
+     tbalance.setText(value);
+//              Toast.makeText(add_balance.this, "Rs. "+value+" added", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+
+
+
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError error) {
+     // calling on cancelled method when we receive
+     // any error or we are not able to get the data.
+     Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+    }
+   });
+   return total_balance[0];
+  }
 
  //option menu
 
