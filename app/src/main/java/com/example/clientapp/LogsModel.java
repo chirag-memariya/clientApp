@@ -9,20 +9,20 @@ import java.time.format.DateTimeFormatter;
 
 public class LogsModel {
     String numberPlate;
-    float fees;
+    String fees;
     String inTime;
     String outTime;
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public LogsModel(String numberPlate, float fees, LocalDateTime inTime, LocalDateTime outTime){
+    public LogsModel(String numberPlate, String fees, String inTime, String outTime){
         this.fees=fees;
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy\n HH:mm");
-        String formattedDate = inTime.format(myFormatObj);
-        this.inTime=formattedDate;
+//        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy\n HH:mm");
+//        String formattedDate = inTime.format(myFormatObj);
+        this.inTime=inTime;
 
 
-        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy\n HH:mm");
-        String formatted = outTime.format(myFormat);
-        this.outTime=formatted;
+//        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy\n HH:mm");
+//        String formatted = outTime.format(myFormat);
+        this.outTime=outTime;
         this.numberPlate=numberPlate;
     }
 }

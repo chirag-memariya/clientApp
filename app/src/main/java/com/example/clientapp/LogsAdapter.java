@@ -3,6 +3,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,10 +28,12 @@ class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ProfileViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ProfileViewHolder holder, int position) {
-        holder.numberPlate.setText(arrModel.get(position).numberPlate);
-        holder.outTime.setText(arrModel.get(position).outTime);
-        holder.inTime.setText(arrModel.get(position).inTime);
-        holder.fees.setText( "" +arrModel.get(position).fees);
+
+            holder.numberPlate.setText(arrModel.get(position).numberPlate);
+            holder.outTime.setText(arrModel.get(position).outTime);
+            holder.inTime.setText(arrModel.get(position).inTime);
+            holder.fees.setText("" + arrModel.get(position).fees);
+
     }
 
     @Override
@@ -43,12 +46,14 @@ class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ProfileViewHolder> {
         TextView fees;
         TextView inTime;
         TextView outTime;
+        Spinner spinner;
         public ProfileViewHolder(View itemView){
             super(itemView);
             numberPlate=itemView.findViewById(R.id.numberPlateTxtVew);
             inTime=itemView.findViewById(R.id.inTime);
             outTime=itemView.findViewById(R.id.outTime);
             fees=itemView.findViewById(R.id.parkingFee);
+            spinner=itemView.findViewById(R.id.selectCategoeryspinner);
         }
     }
 

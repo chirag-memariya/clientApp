@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        VehicleNumber.initVehicleNumbers();
+
+        SpinnerData spinnerData=new SpinnerData();
+       // VehicleNumber.initVehicleNumbers();
 
 
         //Toolbar
@@ -71,11 +73,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
         bikeBtn=findViewById(R.id.addVehicle);
         bikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(MainActivity.this,AddVehicle.class);
+                Intent i=new Intent(getApplicationContext(),AddVehicle.class);
                 startActivity(i);
                 Toast.makeText(MainActivity.this,"Bike selected",Toast.LENGTH_SHORT).show();
             }
@@ -86,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         logBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext()," Wait We Are Fetching Data.",Toast.LENGTH_SHORT).show();
                 Intent i=new Intent(MainActivity.this,LogsActivity.class);
                 startActivity(i);
             }
