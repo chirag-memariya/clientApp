@@ -30,6 +30,7 @@ public class SpinnerAdapter extends ArrayAdapter<VehicleNumber> {
         VehicleNumber vehicleNumber=getItem(position);
         TextView spinnerTxtView=rowView.findViewById(R.id.spinnerTextView);
 
+
         spinnerTxtView.setText(vehicleNumber.getNumber());
         return rowView;
     }
@@ -39,7 +40,7 @@ public class SpinnerAdapter extends ArrayAdapter<VehicleNumber> {
         if(convertView==null)
             convertView=layoutInflater.inflate(R.layout.costom_spinner_adapter,parent,false);
         VehicleNumber vehicleNumber=getItem(position);
-                TextView spinnerTxtView=convertView.findViewById(R.id.spinnerTextView);
+        TextView spinnerTxtView=convertView.findViewById(R.id.spinnerTextView);
         spinnerTxtView.setText(vehicleNumber.getNumber());
 
         return convertView;

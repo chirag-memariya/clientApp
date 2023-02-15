@@ -28,11 +28,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Numberplate"
+
                 android:textAllCaps="false"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 />
 
@@ -42,10 +42,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:text="intime"
+
                 android:textStyle="bold"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -53,11 +53,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="outtime"
+
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -67,9 +67,9 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_weight="1"
-                android:text="Fee"
+
                 android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

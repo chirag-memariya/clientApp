@@ -26,11 +26,11 @@ import java.util.Locale;
 public class AddVehicle extends AppCompatActivity {
 
     private Spinner spinner;
-    ProgressBar progressBar;
+    //ProgressBar progressBar;
     TextInputEditText editText;
     Button addTopNavBtn,removeTopNavBtn;
 
-    private Button addVechileBtn;
+    Button addVechileBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +88,7 @@ public class AddVehicle extends AppCompatActivity {
         FragmentTransaction ft=fm.beginTransaction();
         ft.add(R.id.Container,fragment);
         ft.commit();
-    }
+   }
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

@@ -16,7 +16,7 @@
     </style>
     <style name="Theme1.ClientApp" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#769E99</item>
+        <item name="colorPrimary">#4F98F1</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->

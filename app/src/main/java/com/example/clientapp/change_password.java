@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,10 +21,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import kotlinx.coroutines.InactiveNodeList;
+
 public class change_password extends AppCompatActivity {
 
     EditText old_password, new_password, reenter_password;
     Button save_password;
+    ImageView goto_profile;
 
 
     String current_user = "";
@@ -41,6 +45,7 @@ public class change_password extends AppCompatActivity {
 
         current_user = global_username.getUsername();
         current_id = global_username.getUserid();
+        goto_profile = findViewById(R.id.backtoprofile);
         old_password = findViewById(R.id.Old_Password);
         new_password = findViewById(R.id.New_Password);
         reenter_password = findViewById(R.id.ReEnter_password);
@@ -72,6 +77,13 @@ public class change_password extends AppCompatActivity {
             }
         });
 
+        goto_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), User_Profile.class);
+                startActivity(intent);
+            }
+        });
         save_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
