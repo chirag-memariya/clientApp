@@ -50,6 +50,14 @@
                     android:textColor="@color/white"
                     android:textSize="24sp" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="hello it's user name"
+                    android:textSize="22dp"
+                    android:gravity="center"
+                    android:id="@+id/display_username"
+                    android:textColor="@color/colorAccent"/>
 
                 <GridLayout
                     android:layout_width="match_parent"
@@ -76,6 +84,7 @@
                                     android:layout_height="match_parent"
                                     android:background="@drawable/cardview_background"
                                     android:gravity="center"
+                                    android:onClick="profile_click"
                                     android:orientation="vertical">
 
                                         <ImageView
