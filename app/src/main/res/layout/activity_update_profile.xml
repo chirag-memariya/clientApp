@@ -7,16 +7,35 @@
     android:orientation="vertical"
     tools:context=".User_Profile">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Profile"
-        android:textSize="25dp"
-        android:gravity="center"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="15dp"
-        android:textColor="#1446DA"/>
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/left"
+            android:layout_marginTop="25dp"
+            android:id="@+id/profille_to_profile"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_weight="0.15"
+            android:text="Update Profile"
+            android:gravity="center"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="#1446DA"/>
+
+    </LinearLayout>
+
+
 
     <View
         android:layout_width="match_parent"
@@ -130,7 +149,7 @@
         <Button
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:background="@drawable/custom_textview_design"
+            android:backgroundTint="#8692f7"
             android:text="Save"
             android:id="@+id/Save_Update_profile"
             android:gravity="center"

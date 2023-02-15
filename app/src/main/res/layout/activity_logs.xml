@@ -22,28 +22,28 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:orientation="horizontal"
-            android:background="#7A5734"
+            android:background="#549EDF"
             >
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Select Vehicle"
             android:textStyle="bold"
-            android:layout_weight="3"
-            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:textColor="@color/black"
             android:textSize="18sp"
 
             android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
+            android:gravity="center"
                   />
 
             <Spinner
                 android:id="@+id/selectCategoeryspinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="7"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:spinnerMode="dropdown"
                 android:textColor="@color/white"
@@ -52,16 +52,16 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:orientation="horizontal"
-            android:background="#7A5734">
+            android:background="#6DACF1">
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Number"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
@@ -72,7 +72,7 @@
                 android:text="Entry"
                 android:textStyle="bold"
                 android:layout_weight="1"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:text="Exit"
                 android:layout_weight="1"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:layout_gravity="center_vertical"
@@ -94,7 +94,7 @@
                 android:text="Paid"
                 android:textStyle="bold"
                 android:layout_weight="1"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"

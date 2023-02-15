@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +26,7 @@ public class update_profile extends AppCompatActivity {
     String current_user;
     String current_id;
     Button save_profile;
+    ImageView pro_to_profile;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     String nameFromdb = "";
     String phoneFromdb = "";
@@ -45,6 +47,7 @@ public class update_profile extends AppCompatActivity {
         current_user = global_username.getUsername();
         current_id = global_username.getUserid();
         new_name = findViewById(R.id.New_Name);
+        pro_to_profile = findViewById(R.id.profille_to_profile);
         new_email = findViewById(R.id.New_Email);
         new_phone = findViewById(R.id.New_Phone);
         save_profile = findViewById(R.id.Save_Update_profile);
@@ -87,6 +90,13 @@ public class update_profile extends AppCompatActivity {
             }
         });
 
+        pro_to_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), User_Profile.class);
+                startActivity(intent);
+            }
+        });
         save_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

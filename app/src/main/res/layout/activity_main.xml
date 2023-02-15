@@ -22,7 +22,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_banner">
 
-
                 </androidx.appcompat.widget.Toolbar>
 
                 <androidx.constraintlayout.widget.Guideline
@@ -91,7 +90,7 @@
                                             android:layout_width="45dp"
                                             android:layout_height="45dp"
                                             android:layout_marginTop="18dp"
-                                            android:src="@drawable/profile" />
+                                            android:src="@drawable/woman" />
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -152,11 +151,11 @@
                             app:cardElevation="5dp">
 
                                 <LinearLayout
+                                    android:id="@+id/transaction"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/cardview_background"
                                     android:gravity="center"
-                                    android:id="@+id/transaction"
                                     android:orientation="vertical">
 
                                         <ImageView
