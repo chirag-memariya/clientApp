@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
 import android.view.Display;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,10 +48,10 @@ import java.util.Arrays;
 public class data extends Context {
     private static String mVehiclePlateNo;
     private static String mDatetime;
-    private int mWalletAmount;
+    private String mWalletAmount;
     private static int mFee;
 
-    public data(String vehiclePlateNo, String datetime,int walletAmount,int fee) {
+    public data(String vehiclePlateNo, String datetime,String walletAmount,int fee) {
         mVehiclePlateNo = vehiclePlateNo;
         mDatetime=datetime;
         mWalletAmount=walletAmount;
@@ -65,7 +66,7 @@ public class data extends Context {
         return mDatetime;
     }
 
-    public int getWalletAmount(){
+    public String getWalletAmount(){
         return mWalletAmount;
     }
     public int getFee(){
@@ -74,22 +75,6 @@ public class data extends Context {
 
     public static ArrayList<data> getFireBaseData(Query checkUserDatabase){
         ArrayList<data> datas=new ArrayList<>();
-   /*
-   mReference.child("user").orderByChild("userId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-             //deal with data object
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            //toastMsg(databaseError.getMessage());
-            Log.e(TAG, "onCancelled: " + databaseError.getMessage());
-        }
-    });
-   */
         checkUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -98,8 +83,10 @@ public class data extends Context {
                     String mVehiclePlateNo = snapshot1.child("vehiclePlateNo").getValue(String.class);
                     String mDatetime = snapshot1.child("inTime").getValue(String.class);
                     Integer mFee = snapshot1.child("fee").getValue(Integer.class);
-                    datas.add(new data(mVehiclePlateNo, mDatetime, 300,mFee));
-                     System.out.println(mVehiclePlateNo + "\n" + mDatetime + "\n" + mFee + "\n" + "300");
+//                    Integer mFee=10;
+                    System.out.println(mFee+" "+mVehiclePlateNo+" "+mDatetime);
+                    datas.add(new data(mVehiclePlateNo, mDatetime, "300",mFee));
+//                     System.out.println(mVehiclePlateNo + "\n" + mDatetime + "\n" + mFee + "\n" + "300");
                 }
             }
             @Override

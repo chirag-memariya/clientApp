@@ -51,23 +51,6 @@
 
 
 
-
-
-  //^^^^
-
-
-  ////    public static ArrayList<data> createdatasList(int numdatas) {
-  ////        ArrayList<data> datas = new ArrayList<data>();
-  ////        datas.add(new data("Vehicle1",true));
-  //
-  //
-  ////        for (int i = 1; i <= numdatas; i++) {
-  ////            datas.add(new data("Eva Mall " + ++lastdataId, i <= numdatas / 2));
-  ////        }
-
-
-
-
  @Override
  protected void onCreate(Bundle savedInstanceState) {
  super.onCreate(savedInstanceState);
@@ -83,73 +66,32 @@
   textViewBalance=findViewById(R.id.textViewBalance);
 
   //set real database balance to the textViewBalance
-
-
+  String cureent =global_username.getUserid();
   DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("User");
-  Query checkUserDatabase1 = reference1.equalTo("kasl");
+  Query checkUserDatabase1 = reference1.orderByChild("userId").equalTo(cureent);
   checkUserDatabase1.addValueEventListener(new ValueEventListener() {
                                            @Override
                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                             for(DataSnapshot snapshot1:snapshot.getChildren()) {
                                              String mWalletMoney=snapshot1.child("wallet").getValue(String.class);
-//                                             numberPlate = snapshot1.child("vehiclePlateNo").getValue(String.class);
-//                                             inTime = snapshot1.child("inTime").getValue(String.class);
-//                                             outTime = snapshot1.child("outTime").getValue(String.class);
-                                             //   int tmpFee = snapshot1.child("fee").getValue(Integer.class);
-                                             //    fees=Integer.toString(tmpFee);
-//                                             arrNumber.add(new LogsModel(numberPlate, "fees", inTime, outTime));
-                                             // System.out.println(numberPlate + "\n" + fees + "\n" + inTime + "\n" + outTime);
                                              textViewBalance.setText(mWalletMoney);
-
                                             }
                                            }
-
                                            @Override
                                            public void onCancelled(@NonNull DatabaseError error) {
 
                                            }});
 
 
-                                           //firebase
-  FirebaseDatabase firebaseDatabase;
-  firebaseDatabase = FirebaseDatabase.getInstance();
-
-  DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
-
+//firebase
+//  FirebaseDatabase firebaseDatabase;
+//  firebaseDatabase = FirebaseDatabase.getInstance();
+//
+//  DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
+//
 //  setData(databaseReference,textViewBalance);
 
-  /*
-  Continue.setOnClickListener(new View.OnClickListener() {
-   @Override
-   public void onClick(View view) {
-    String added_amoount=editTextAddAmount.getText().toString();
-    int editAmount=Integer.parseInt(added_amoount);
-    if(added_amoount.isEmpty()){
-     Toast.makeText(add_balance.this, "Please Enter a Amount!!", Toast.LENGTH_SHORT).show();
-    }else{
-     //set data
-                    /*
-                    DatabaseReference databaseReference1=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
-                    databaseReference1.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            int value = snapshot.child("amt").getValue(Integer.class);  //-->>>> retrieved from  database
-
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-     FirebaseDatabase.getInstance().getReference("programing knowladge").child("amt").setValue(arr[0]+editAmount);
-     Toast.makeText(add_balance.this, "Rs. "+added_amoount+" added", Toast.LENGTH_SHORT).show();
-     finish();
-
-
-    }
-   }
-  }); */
 
   addMoney.setOnTouchListener(new View.OnTouchListener() {
    @Override
@@ -190,6 +132,25 @@
 
 // datas = data.createdatasList(20);
 
+  DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference("vehicle");
+  Query checkUserDatabase3 = reference3.orderByChild("userId").equalTo(cureent);
+  checkUserDatabase3.addValueEventListener(new ValueEventListener() {
+   @Override
+   public void onDataChange(@NonNull DataSnapshot snapshot) {
+    for(DataSnapshot snapshot1:snapshot.getChildren()) {
+     String mvehicalePlateNo=snapshot1.child("vehiclePlateNo").getValue(String.class);
+     System.out.println(mvehicalePlateNo);
+    }
+
+   }
+
+   @Override
+   public void onCancelled(@NonNull DatabaseError error) {
+
+   }
+  });
+
+
   DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
   Query checkUserDatabase = reference.orderByChild("transactionId");
   datas=getFireBaseData(checkUserDatabase);
@@ -200,14 +161,6 @@
  recyclerViewData.setAdapter(adapter);
  // Set layout manager to position the items
  recyclerViewData.setLayoutManager(new LinearLayoutManager(this));
- // That's all!
-
-// datas.addAll(data.createdatasList(5));
-
- // Add a new contact
-// datas.add(0, new data("Barney", true));
-// // Notify the adapter that an item was inserted at position 0
-// adapter.notifyItemInserted(0);
 
  RecyclerView.ItemDecoration itemDecoration = new
  DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -250,19 +203,19 @@
  }
 
   //for read data into a firebase
-  private void setData(@NonNull DatabaseReference databaseReference, TextView tbalance){
-   databaseReference.addValueEventListener(new ValueEventListener() {
-    @Override
-    public void onDataChange( DataSnapshot snapshot) {
-     int value = snapshot.child("amt").getValue(Integer.class);
-     tbalance.setText("Rs "+value);
-    }
-    @Override
-    public void onCancelled(@NonNull DatabaseError error) {
-     Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
-    }
-   });
-  }
+//  private void setData(@NonNull DatabaseReference databaseReference, TextView tbalance){
+//   databaseReference.addValueEventListener(new ValueEventListener() {
+//    @Override
+//    public void onDataChange( DataSnapshot snapshot) {
+//     int value = snapshot.child("amt").getValue(Integer.class);
+//     tbalance.setText("Rs "+value);
+//    }
+//    @Override
+//    public void onCancelled(@NonNull DatabaseError error) {
+//     Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+//    }
+//   });
+//  }
 
  //option menu
 

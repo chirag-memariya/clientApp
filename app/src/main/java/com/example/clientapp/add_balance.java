@@ -83,7 +83,7 @@ public class add_balance extends AppCompatActivity {
         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
 
         int arr[]=new int[2];
-        setData(databaseReference,Tbalance,arr);
+//        setData(databaseReference,Tbalance,arr);
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
