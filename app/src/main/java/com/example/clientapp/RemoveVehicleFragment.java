@@ -35,7 +35,7 @@ public class RemoveVehicleFragment extends Fragment {
     Spinner removeSpinner;
 
 
-    String current_id;
+    String current_id,valueFromSpinner;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +45,6 @@ public class RemoveVehicleFragment extends Fragment {
         removeBtn=view.findViewById(R.id.removeVehicleButton);
         removeSpinner=view.findViewById(R.id.selectVehivle);
 
-
         current_id=global_username.getUserid();
 
 
@@ -54,6 +53,29 @@ public class RemoveVehicleFragment extends Fragment {
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                removeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        VehicleNumber vehicleNumber=(VehicleNumber) parent.getItemAtPosition(position);
+                        valueFromSpinner=vehicleNumber.getNumber();
+                     //   Toast.makeText(getContext(),valueFromSpinner,Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+
+
+
+
+
+
+
+
+
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("vehicle");
                 Query applesQuery = ref.orderByChild("userId").equalTo(current_id);
 
@@ -61,8 +83,9 @@ public class RemoveVehicleFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot1: dataSnapshot.getChildren()) {
-                            if((snapshot1.child("vehiclePlateNo").getValue(String.class)).equals(removeSpinner.getSelectedItem().toString())){
-                                Toast.makeText(getContext(),"True",Toast.LENGTH_SHORT).show();
+                            if((snapshot1.child("vehiclePlateNo").getValue(String.class)).equals(valueFromSpinner)){
+                                snapshot1.getRef().removeValue();
+                                Toast.makeText(getContext(),"Removed"+valueFromSpinner,Toast.LENGTH_SHORT).show();
                             }
                             //snapshot1.getRef().removeValue();
                         }
@@ -74,9 +97,11 @@ public class RemoveVehicleFragment extends Fragment {
                     }
                 });
 
-                Toast.makeText(getContext(),"Removed Vehicle "+(removeSpinner.getSelectedItem().toString()),Toast.LENGTH_SHORT).show();
-                removeSpinner.getItemAtPosition(removeSpinner.getSelectedItemPosition());
-                Toast.makeText(getContext(),""+removeSpinner.getSelectedItem().toString().substring(35),Toast.LENGTH_SHORT).show();
+
+
+//                Toast.makeText(getContext(),"Removed Vehicle "+(removeSpinner.getSelectedItem().toString()),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),removeSpinner.getItemAtPosition(removeSpinner.getSelectedItemPosition()).toString(),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),""+removeSpinner.getSelectedItem().toString().substring(35),Toast.LENGTH_SHORT).show();
 
             }
         });

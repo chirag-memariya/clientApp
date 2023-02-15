@@ -25,6 +25,7 @@ public class SpinnerData {
         checkVehicleDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                vehicleNumberArrayList.clear();
 
                 for(DataSnapshot dataSnapshot1:snapshot.getChildren())
                 {

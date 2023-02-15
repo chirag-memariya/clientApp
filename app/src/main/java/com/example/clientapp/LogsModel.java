@@ -8,12 +8,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LogsModel {
-    String numberPlate;
-    String fees;
+     String  numberPlate;
+    int fees;
+
+    public  String getNumberPlate() {
+        return numberPlate;
+    }
+
     String inTime;
     String outTime;
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public LogsModel(String numberPlate, String fees, String inTime, String outTime){
+    public LogsModel(String numberPlate, int fees, String inTime, String outTime){
         this.fees=fees;
 //        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy\n HH:mm");
 //        String formattedDate = inTime.format(myFormatObj);

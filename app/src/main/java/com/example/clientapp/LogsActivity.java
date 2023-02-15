@@ -31,9 +31,10 @@ import java.util.ArrayList;
 public class LogsActivity extends AppCompatActivity {
 
     ArrayList<LogsModel> arrNumber =new ArrayList<LogsModel>();
+    ArrayList<LogsModel> userVehicleNumber =new ArrayList<LogsModel>();
     RecyclerView recyclerView;
     Spinner spinner;
-    String numberPlate,current_id;
+    String numberPlate,current_id,valueFromSpinner;
     String fees;
     String inTime,outTime;
     ArrayList<VehicleNumber> vehicleNumberArrayList=new ArrayList<>();
@@ -46,7 +47,7 @@ public class LogsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         spinner=findViewById(R.id.selectCategoeryspinner);
-        SpinnerData spinnerData=new SpinnerData();
+
 
 
 //
@@ -77,9 +78,11 @@ public class LogsActivity extends AppCompatActivity {
                     numberPlate = snapshot1.child("vehiclePlateNo").getValue(String.class);
                     inTime = snapshot1.child("inTime").getValue(String.class);
                     outTime = snapshot1.child("outTime").getValue(String.class);
-                 //   int tmpFee = snapshot1.child("fee").getValue(Integer.class);
+                    Integer tmpFee = snapshot1.child("fee").getValue(Integer.class);
                 //    fees=Integer.toString(tmpFee);
-                    arrNumber.add(new LogsModel(numberPlate, "fees", inTime, outTime));
+                    inTime=inTime.substring(0,10)+"\n"+inTime.substring(inTime.indexOf(" "),inTime.indexOf(" ")+6);
+                    outTime=outTime.substring(0,10)+"\n"+outTime.substring(outTime.indexOf(" "),outTime.indexOf(" ")+6);
+                    arrNumber.add(new LogsModel(numberPlate, tmpFee, inTime, outTime));
                    // System.out.println(numberPlate + "\n" + fees + "\n" + inTime + "\n" + outTime);
                 }
             }
@@ -96,7 +99,7 @@ public class LogsActivity extends AppCompatActivity {
 
 
 
-        SystemClock.sleep(2000);
+     //   SystemClock.sleep(2000);
         SpinnerAdapter costomAdapter=new SpinnerAdapter(this,R.layout.costom_spinner_adapter,VehicleNumber.getVehicleNumbers());
         spinner.setAdapter(costomAdapter);
 
@@ -107,8 +110,29 @@ public class LogsActivity extends AppCompatActivity {
 //            }
 //        });
 
-        LogsAdapter adapter=new LogsAdapter(this, arrNumber);
-        recyclerView.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                VehicleNumber vehicleNumber=(VehicleNumber) parent.getItemAtPosition(position);
+                valueFromSpinner=vehicleNumber.getNumber();
+                LogsAdapter adapter=new LogsAdapter(getApplicationContext(), arrNumber,valueFromSpinner);
+                recyclerView.setAdapter(adapter);
+//                for(int i=0;i<arrNumber.size();i++){
+//                    if(logsModel.getNumberPlate().equals(valueFromSpinner)){
+//                        Toast.makeText(getApplicationContext(),"in"+arrNumber.get(0).toString(),Toast.LENGTH_SHORT).show();
+//                    }
+//                    Toast.makeText(getApplicationContext(),"out"+ arrNumber.get(0).toString(),Toast.LENGTH_SHORT).show();
+//                }
+             //      Toast.makeText(getContext(),valueFromSpinner,Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
 
     }
 

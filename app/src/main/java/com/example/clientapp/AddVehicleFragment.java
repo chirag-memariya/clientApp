@@ -85,7 +85,7 @@ public class AddVehicleFragment extends Fragment {
                 } else  {
 //                    database = FirebaseDatabase.getInstance();
 //                    reference = database.getReference("vehicle");
-                    Toast.makeText(getContext(),"it is running",LENGTH_SHORT).show();
+                 //   Toast.makeText(getContext(),"it is running",LENGTH_SHORT).show();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("vehicle");
                     Query checkUserDatabase = reference.orderByChild("userId").equalTo(current_id);
 
@@ -104,7 +104,7 @@ public class AddVehicleFragment extends Fragment {
                                 }
                             }
                             if(temp==0){
-                                Toast.makeText(getContext(),"Vehivle already registered",LENGTH_SHORT).show();
+                                Toast.makeText(getContext(),"Vehicle already registered",LENGTH_SHORT).show();
                             }else{
 
                                 Map<String, Object> updates = new HashMap<>();

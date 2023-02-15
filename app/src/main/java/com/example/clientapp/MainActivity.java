@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i=new Intent(getApplicationContext(),AddVehicle.class);
                 startActivity(i);
-                Toast.makeText(MainActivity.this,"Bike selected",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this,"Bike selected",Toast.LENGTH_SHORT).show();
             }
         });
 
