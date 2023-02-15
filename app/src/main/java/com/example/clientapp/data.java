@@ -58,6 +58,18 @@ public class data extends Context {
         mFee=fee;
     }
 
+    public static ArrayList<data> createContactsList(int numContacts) {
+        ArrayList<data> contacts = new ArrayList<data>();
+
+//        int lastContactId=0;
+//        for (int i = 1; i <= numContacts; i++) {
+//
+//            contacts.add(new data("Person " + ++lastContactId, i <= numContacts / 2));
+//        }
+
+        return contacts;
+    }
+
     public String getVehiclePlateNo() {
         return mVehiclePlateNo;
     }
@@ -72,35 +84,6 @@ public class data extends Context {
     public int getFee(){
         return mFee;
     }
-
-    public static ArrayList<data> getFireBaseData(Query checkUserDatabase){
-        ArrayList<data> datas=new ArrayList<>();
-        checkUserDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot snapshot1:snapshot.getChildren()) {
-                    String mVehiclePlateNo = snapshot1.child("vehiclePlateNo").getValue(String.class);
-                    String mDatetime = snapshot1.child("inTime").getValue(String.class);
-                    Integer mFee = snapshot1.child("fee").getValue(Integer.class);
-//                    Integer mFee=10;
-                    System.out.println(mFee+" "+mVehiclePlateNo+" "+mDatetime);
-                    datas.add(new data(mVehiclePlateNo, mDatetime, "300",mFee));
-//                     System.out.println(mVehiclePlateNo + "\n" + mDatetime + "\n" + mFee + "\n" + "300");
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-        return datas;
-    }
-
-
-
-
-
-    private static int lastdataId = 0;
 
 
     @Override

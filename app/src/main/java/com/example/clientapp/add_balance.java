@@ -3,6 +3,7 @@ package com.example.clientapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,12 +15,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class add_balance extends AppCompatActivity {
     EditText editTextAddAmount;
     Button Continue;
     TextView Tbalance;
+
+    String nameFromdb , emailfromdb , passwordfromdb , phoneFromdb ;
+    String mWalletMoney;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,198 +38,112 @@ public class add_balance extends AppCompatActivity {
         Tbalance=findViewById(R.id.Tbalance);
         Continue=findViewById(R.id.payBtn);
 
-/*
-//        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-////        DatabaseReference ref = rootRef.child("Hospital").child("QCH");
-//        DatabaseReference ref = rootRef.child("programing knowladge");
-//        ValueEventListener valueEventListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                String customerBalance = dataSnapshot.child("Balance").getValue(String.class);
-//                Toast.makeText(add_balance.this, "Customer balance "+customerBalance, Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        };
-//        ref.addListenerForSingleValueEvent(valueEventListener);
-
-
-        // below line is used to get
-        // reference for our database.
-  //      databaseReference = firebaseDatabase.getReference("Balance");
-
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("programing knowladge");
-//        Query checkUserDatabase = reference.orderByChild("Name").equalTo("Chirag");
-//
-/*        checkUserDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren())
-                {
-                    Query checkUserDatabase = reference.orderByChild("Name").equalTo("Chirag");
-                    Toast.makeText(add_balance.this, " "+ current_balance, Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-
-            }
-        });
-        */
-
         //firebase
-        FirebaseDatabase firebaseDatabase;
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("User");
+
+        String cureent =global_username.getUserid();
+
+        //set real database balance to the textViewBalance
+
+        String[] WalletMoney = {""};
+        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("User");
+        Query checkUserDatabase1 = reference1.orderByChild("userId").equalTo(cureent);
+        checkUserDatabase1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot snapshot1:snapshot.getChildren()) {
+                    mWalletMoney=snapshot1.child("wallet").getValue(String.class);
+                    nameFromdb = snapshot1.child("name").getValue(String.class);
+                    emailfromdb = snapshot1.child("email").getValue(String.class);
+                    phoneFromdb = snapshot1.child("phone").getValue(String.class);
+                    passwordfromdb = snapshot1.child("password").getValue(String.class);
+                    WalletMoney[0] =mWalletMoney;
+                    Tbalance.setText(mWalletMoney+" paisaa");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }});
+
+        // abhi code
 
 
-        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
 
-        int arr[]=new int[2];
-//        setData(databaseReference,Tbalance,arr);
+
+        //
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String added_amoount=editTextAddAmount.getText().toString();
-                int editAmount=Integer.parseInt(added_amoount);
                 if(added_amoount.isEmpty()){
                     Toast.makeText(add_balance.this, "Please Enter a Amount!!", Toast.LENGTH_SHORT).show();
                 }else{
-                    //set data
-                    /*
-                    DatabaseReference databaseReference1=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
-                    databaseReference1.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            int value = snapshot.child("amt").getValue(Integer.class);  //-->>>> retrieved from  database
+                    int editAmount=Integer.parseInt(added_amoount);
+                    try{
+                        int i = Integer.parseInt(WalletMoney[0]);
+                        int ans=i+editAmount;
 
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
-                        }
-                    }); */
-                    FirebaseDatabase.getInstance().getReference("programing knowladge").child("amt").setValue(arr[0]+editAmount);
-                    Toast.makeText(add_balance.this, "Rs. "+added_amoount+" added", Toast.LENGTH_SHORT).show();
-                    finish();
+                        reference1.orderByChild("userId").equalTo(cureent).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                                    String clubkey = childSnapshot.getKey();
 
 
+                                    Map<String, Object> updates = new HashMap<>();
+
+                                    updates.put("userId", cureent );
+                                    updates.put("name", nameFromdb );
+                                    updates.put("email", emailfromdb);
+                                    updates.put("phone", phoneFromdb);
+                                    updates.put("password", phoneFromdb);
+                                    updates.put("wallet", Integer.toString(ans));
+
+
+
+                                    //        reference.child("users").child(current_user).setValue(new_user_name);
+                                    reference1.child(clubkey).setValue(updates);
+
+                                    Toast.makeText(getApplicationContext(), "Balance Added. ", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }}
+
+                            public void onCancelled(DatabaseError error) {
+                                Toast.makeText(getApplicationContext(), "Failed to read value.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                     //   FirebaseDatabase.getInstance().getReference("User").child("wallet").setValue(Integer.toString(ans));
+                      //  Toast.makeText(add_balance.this, "Rs. "+added_amoount+" added", Toast.LENGTH_SHORT).show();
+                      //  finish();
+
+                    } catch(NumberFormatException ex){ // handle your exception
+                        System.out.println("Error !!!!!!");
+                    }
                 }
             }
         });
-
-/*
-        //add database balance
-
-//        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("Languages");
-
-
-
-        /// //////// abhi code
-
-
-//        int total_balance=50;
-////        total_balance=setData(databaseReference,Tbalance);
-//        // initializing our object class variable.
-//
-//        int finalTotal_balance = total_balance;
-//        Continue.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-         //       String added_amoount_str=editTextAddAmount.getText().toString();
-           //     int added_amoount=Integer.parseInt(added_amoount_str);
-
-            //    if(added_amoount_str.isEmpty()){
-             //       Toast.makeText(add_balance.this, "Please Enter a Amount!!", Toast.LENGTH_SHORT).show();
-              //  }else{
-
-               //     FirebaseDatabase.getInstance().getReference("programing knowladge").child("Balance").setValue( (finalTotal_balance + added_amoount));
-//                    Toast.makeText(add_balance.this, "Rs. "+added_amoount+" added", Toast.LENGTH_SHORT).show();
-//                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("programing knowladge");
-//                    Query checkUserDatabase = reference.orderByChild("Name").equalTo("Chirag");
-//
-//                    checkUserDatabase.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            String namefromdb = "";
-//
-//                            for(DataSnapshot dataSnapshot1:snapshot.getChildren())
-//                            {     namefromdb = dataSnapshot1.child("Email").getValue(String.class);
-//                                Toast.makeText(add_balance.this, " "+ namefromdb, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-//                //    finish();
-//               // }
-//            }
-//        });
-        ///////// end abhi code
-
-
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                List<Object> list = null;
-//                list.clear();
-//                for (DataSnapshot snapshot:dataSnapshot.getChildren()){
-//                    list.add(snapshot.getValue());
-//                }
-//                Adapter adapter = null;
-////                adapter.notify
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
-
-//        Intent intent=getIntent();
-
-//        String str=editTextAddAmount.getText().toString();
-//        int added=Integer.parseInt(str);
-//        intent.putExtra("added",added);
-//        setResult(RESULT_OK,intent);
-
-
-//        Continue.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(add_balance.this, str+"money added", Toast.LENGTH_SHORT).show();
-////                finish();
-//            }
-//        });
-
-*/
     }
 
 
     //for read data into a firebase
-    private int setData(@NonNull DatabaseReference databaseReference, TextView tbalance, int[] arr){
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange( DataSnapshot snapshot) {
-                int value = snapshot.child("amt").getValue(Integer.class);
-                arr[0]=value;
-                tbalance.setText(value+" .Cr");
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
-            }
-        });
-        return arr[0];
-    }
+//    private String setData(@NonNull DatabaseReference databaseReference){
+//        final String[] str = {new String()};
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange( DataSnapshot snapshot) {
+//                String value = snapshot.child("wallet").getValue(String.class);
+//                str[0] =value;
+//                System.out.println(value);
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+//        return str[0];
+//    }
+
 
 }

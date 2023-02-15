@@ -1,6 +1,5 @@
  package com.example.clientapp;
 
- import static com.example.clientapp.data.getFireBaseData;
 
  import androidx.activity.result.ActivityResultLauncher;
  import androidx.annotation.NonNull;
@@ -15,6 +14,7 @@
 
  import android.content.Intent;
  import android.os.Bundle;
+ import android.os.SystemClock;
  import android.view.Menu;
  import android.view.MenuInflater;
  import android.view.MenuItem;
@@ -38,24 +38,76 @@
 
  public class Wallet_Upadate extends AppCompatActivity {
 
- ArrayList<data> datas;
 
+//Anils Code
+//ArrayList<TransactionModel> arrNumber =new ArrayList<>();
+//  RecyclerView recyclerView;
+//  String numberPlate;
+//  String inTime,outTime;
+  //End
+
+ ArrayList<TransactionModel> datas=new ArrayList<>();
+  RecyclerView recyclerViewData;
+  ArrayList<String> vehiclePlateNoList=new ArrayList<>();
  Toolbar toolbar;
-
+ ArrayList<DataAdapter> newList;
  //text add money button
   TextView addMoney;
   TextView textViewBalance;
   Animation scaleUp,scaleDown;
-
-  ActivityResultLauncher<Intent> activityResultLauncher;
-
-
 
  @Override
  protected void onCreate(Bundle savedInstanceState) {
  super.onCreate(savedInstanceState);
  setContentView(R.layout.activity_wallet_upadate);
 
+
+
+
+
+ //Anil Code
+
+//
+//  recyclerView = findViewById(R.id.rvdatas);
+//  recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//  DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
+//  Query checkUserDatabase = reference.orderByChild("transactionId");
+//  checkUserDatabase.addValueEventListener(new ValueEventListener() {
+//   @Override
+//   public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//     numberPlate = snapshot1.child("vehiclePlateNo").getValue(String.class);
+//     inTime = snapshot1.child("inTime").getValue(String.class);
+//     outTime = snapshot1.child("outTime").getValue(String.class);
+//     Integer tmpFee = snapshot1.child("fee").getValue(Integer.class);
+//     //    fees=Integer.toString(tmpFee);
+//     arrNumber.add(new TransactionModel(numberPlate, tmpFee, inTime));
+//     // System.out.println(numberPlate + "\n" + fees + "\n" + inTime + "\n" + outTime);
+//    }
+//   }
+//
+//   @Override
+//   public void onCancelled(@NonNull DatabaseError error) {
+//    //  Toast.makeText(LogsActivity.this, "Failed to read value.", Toast.LENGTH_SHORT).show();
+//   }
+//  });
+//
+//
+//  SystemClock.sleep(2000);
+//  TransactionAdapter adapter = new TransactionAdapter(getApplicationContext(), arrNumber);
+//  recyclerView.setAdapter(adapter);
+//
+//
+// }
+ //ends here
+
+  //^^^^^^Transaction Loading
+  //recycler view
+  // Lookup the recyclerview in activity layout
+  recyclerViewData= findViewById(R.id.rvdatas);
+  recyclerViewData.setLayoutManager(new LinearLayoutManager(this));
 
  //add money text view
   addMoney=findViewById(R.id.addMoney);
@@ -80,17 +132,67 @@
                                            }
                                            @Override
                                            public void onCancelled(@NonNull DatabaseError error) {
-
                                            }});
 
 
 //firebase
-//  FirebaseDatabase firebaseDatabase;
-//  firebaseDatabase = FirebaseDatabase.getInstance();
-//
-//  DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
-//
-//  setData(databaseReference,textViewBalance);
+
+
+//  getVehiclePlatenNo
+  //i need to store this data into array and print into a transaction id section
+  DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference("vehicle");
+  Query checkUserDatabase3 = reference3.orderByChild("userId").equalTo(cureent);
+  checkUserDatabase3.addValueEventListener(new ValueEventListener() {
+   @Override
+   public void onDataChange(@NonNull DataSnapshot snapshot) {
+    for(DataSnapshot snapshot1:snapshot.getChildren()) {
+     String mvehicalePlateNo=snapshot1.child("vehiclePlateNo").getValue(String.class);
+     vehiclePlateNoList.add(mvehicalePlateNo);
+     System.out.println(mvehicalePlateNo);
+    }
+    for(String str:vehiclePlateNoList){
+     System.out.println(str);
+     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
+     Query checkUserDatabase = reference.orderByChild("vehiclePlateNo").equalTo(str);
+
+     checkUserDatabase.addValueEventListener(new ValueEventListener() {
+
+      @Override
+      public void onDataChange(@NonNull DataSnapshot snapshot) {
+       //    Toast.makeText(Wallet_Upadate.this, "it's here bc", Toast.LENGTH_SHORT).show();
+       for(DataSnapshot snapshot1:snapshot.getChildren()) {
+        String mVehiclePlateNo = snapshot1.child("vehiclePlateNo").getValue(String.class);
+        String mDatetime = snapshot1.child("inTime").getValue(String.class);
+        Integer mFee = snapshot1.child("fee").getValue(Integer.class);
+        datas.add(new TransactionModel(mVehiclePlateNo, mFee,mDatetime));
+        System.out.println(datas.size());
+
+       }
+      // SystemClock.sleep(2000);
+       TransactionAdapter adapter=new TransactionAdapter(getApplicationContext(), datas);
+       recyclerViewData.setAdapter(adapter);
+      }
+      @Override
+      public void onCancelled(@NonNull DatabaseError error) {
+      }
+     });
+    }
+
+
+   }
+
+   @Override
+   public void onCancelled(@NonNull DatabaseError error) {
+
+   }
+  });
+
+  for (String str :
+          vehiclePlateNoList) {
+   System.out.println(str);
+
+  }
+
 
 
   addMoney.setOnTouchListener(new View.OnTouchListener() {
@@ -109,58 +211,54 @@
   addMoney.setOnClickListener(new View.OnClickListener() {
    @Override
    public void onClick(View view) {
-
-
     Intent intent=new Intent(getApplicationContext(),add_balance.class);
     startActivity(intent);
    }
   });
 
 
-
-
-
-
-
-  //^^^^^^Transaction Loading
-
- //recycler view
- // Lookup the recyclerview in activity layout
- RecyclerView recyclerViewData=(RecyclerView) findViewById(R.id.rvdatas) ;
-
  // Initialize data
 
-// datas = data.createdatasList(20);
+//  for(String str:vehiclePlateNoList){
+//   System.out.println(str);
+//  DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
+//  Query checkUserDatabase = reference.orderByChild("vehiclePlateNo").equalTo(str);
+//
+//   checkUserDatabase.addValueEventListener(new ValueEventListener() {
+//
+//    @Override
+//    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//     //    Toast.makeText(Wallet_Upadate.this, "it's here bc", Toast.LENGTH_SHORT).show();
+//     for(DataSnapshot snapshot1:snapshot.getChildren()) {
+//      String mVehiclePlateNo = snapshot1.child("vehiclePlateNo").getValue(String.class);
+//      String mDatetime = snapshot1.child("inTime").getValue(String.class);
+//      Integer mFee = snapshot1.child("fee").getValue(Integer.class);
+//      datas.add(new data(mVehiclePlateNo, mDatetime, "300",mFee));
+//      System.out.println(datas.size());
+//
+//     }
+//    }
+//    @Override
+//    public void onCancelled(@NonNull DatabaseError error) {
+//    }
+//   });
+//  }
 
-  DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference("vehicle");
-  Query checkUserDatabase3 = reference3.orderByChild("userId").equalTo(cureent);
-  checkUserDatabase3.addValueEventListener(new ValueEventListener() {
-   @Override
-   public void onDataChange(@NonNull DataSnapshot snapshot) {
-    for(DataSnapshot snapshot1:snapshot.getChildren()) {
-     String mvehicalePlateNo=snapshot1.child("vehiclePlateNo").getValue(String.class);
-     System.out.println(mvehicalePlateNo);
-    }
-
-   }
-
-   @Override
-   public void onCancelled(@NonNull DatabaseError error) {
-
-   }
-  });
 
 
-  DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
-  Query checkUserDatabase = reference.orderByChild("transactionId");
-  datas=getFireBaseData(checkUserDatabase);
 
- // Create adapter passing in the sample user data
- DataAdapter adapter = new DataAdapter(datas);
- // Attach the adapter to the recyclerview to populate items
- recyclerViewData.setAdapter(adapter);
- // Set layout manager to position the items
- recyclerViewData.setLayoutManager(new LinearLayoutManager(this));
+  System.out.println(datas.size());
+// // Create adapter passing in the sample user data
+// DataAdapter adapter = new DataAdapter(datas);
+// // Attach the adapter to the recyclerview to populate items
+// recyclerViewData.setAdapter(adapter);
+
+
+
+  // // Set layout manager to position the items
+
+
+
 
  RecyclerView.ItemDecoration itemDecoration = new
  DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -202,20 +300,6 @@
  //        }
  }
 
-  //for read data into a firebase
-//  private void setData(@NonNull DatabaseReference databaseReference, TextView tbalance){
-//   databaseReference.addValueEventListener(new ValueEventListener() {
-//    @Override
-//    public void onDataChange( DataSnapshot snapshot) {
-//     int value = snapshot.child("amt").getValue(Integer.class);
-//     tbalance.setText("Rs "+value);
-//    }
-//    @Override
-//    public void onCancelled(@NonNull DatabaseError error) {
-//     Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
-//    }
-//   });
-//  }
 
  //option menu
 

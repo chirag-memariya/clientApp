@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         walletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 //                Intent i=new Intent(MainActivity.this,walletActivity.class);
                 Intent i=new Intent(MainActivity.this,Wallet_Upadate.class);
                 startActivity(i);

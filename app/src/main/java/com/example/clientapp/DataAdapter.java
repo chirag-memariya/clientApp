@@ -10,19 +10,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
-//Create the basic adapter extending from RecyclerView.Adapter
-// Note that we specify the custom ViewHolder which gives us access to our views
-public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
+import java.util.ArrayList;
 
 
+public class DataAdapter extends
+        RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
+    ArrayList<data> mdatas=new ArrayList<>();
+    String mVehiclePlateNo;
+    String mDatetime;
+    int mFee;
 
+    public DataAdapter(ArrayList<data> datas) {
+        mdatas=datas;
+    }
 
-    // Usually involves inflating a layout from XML and returning the holder
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -34,46 +39,24 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         return viewHolder;
     }
 
-    // Involves populating data into the item through holder
     @Override
-    public void onBindViewHolder(DataAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data model based on position
-        data datas = mdatas.get(position);
+        data contact = mdatas.get(position);
 
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
-        textView.setText(datas.getVehiclePlateNo());
-
-        //subtitle
-        TextView textView1=holder.nameTextView;
-        textView.setText(datas.getDatetime());
-
+        textView.setText(contact.getVehiclePlateNo());
+        TextView textView1 = holder.nameTextView1;
+        textView1.setText(contact.getVehiclePlateNo());
         Button button = holder.messageButton;
-        button.setText(datas.getFee());
-//        button.setEnabled(contact.isOnline());
+        button.setText(contact.getFee());
     }
 
-    // Returns the total count of items in the list
     @Override
     public int getItemCount() {
         return mdatas.size();
     }
-
-
-
-   // ... view holder defined above...
-
-    // Store a member variable for the contacts
-    private final List<data> mdatas;
-
-    // Pass in the contact array into the constructor
-    public DataAdapter(List<data> contacts) {
-        mdatas = contacts;
-    }
-
-
-
-
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -81,6 +64,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView nameTextView;
+        public TextView nameTextView1;
+
         public Button messageButton;
 
         // We also create a constructor that accepts the entire item row
@@ -91,7 +76,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             super(itemView);
 
             nameTextView = (TextView) itemView.findViewById(R.id.contact_name);
-            messageButton = (Button) itemView.findViewById(R.id.message_button);
+            nameTextView1 = (TextView) itemView.findViewById(R.id.contact_name1);
+            messageButton = (Button) itemView.findViewById(R.id.fee_button);
         }
     }
 }
