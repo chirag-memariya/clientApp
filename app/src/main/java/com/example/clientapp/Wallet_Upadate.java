@@ -1,9 +1,8 @@
  package com.example.clientapp;
 
- import androidx.activity.result.ActivityResult;
- import androidx.activity.result.ActivityResultCallback;
+ import static com.example.clientapp.data.getFireBaseData;
+
  import androidx.activity.result.ActivityResultLauncher;
- import androidx.activity.result.contract.ActivityResultContracts;
  import androidx.annotation.NonNull;
  import androidx.appcompat.app.AppCompatActivity;
  import androidx.appcompat.widget.Toolbar;
@@ -14,9 +13,6 @@
  import androidx.recyclerview.widget.SnapHelper;
 
 
- import android.animation.Animator;
- import android.annotation.SuppressLint;
- import android.app.Instrumentation;
  import android.content.Intent;
  import android.os.Bundle;
  import android.view.Menu;
@@ -26,7 +22,6 @@
  import android.view.View;
  import android.view.animation.Animation;
  import android.view.animation.AnimationUtils;
- import android.widget.Button;
  import android.widget.TextView;
  import android.widget.Toast;
 
@@ -34,6 +29,7 @@
  import com.google.firebase.database.DatabaseError;
  import com.google.firebase.database.DatabaseReference;
  import com.google.firebase.database.FirebaseDatabase;
+ import com.google.firebase.database.Query;
  import com.google.firebase.database.ValueEventListener;
 
  import java.util.ArrayList;
@@ -44,8 +40,6 @@
 
  ArrayList<data> datas;
 
-
-
  Toolbar toolbar;
 
  //text add money button
@@ -54,6 +48,23 @@
   Animation scaleUp,scaleDown;
 
   ActivityResultLauncher<Intent> activityResultLauncher;
+
+
+
+
+
+  //^^^^
+
+
+  ////    public static ArrayList<data> createdatasList(int numdatas) {
+  ////        ArrayList<data> datas = new ArrayList<data>();
+  ////        datas.add(new data("Vehicle1",true));
+  //
+  //
+  ////        for (int i = 1; i <= numdatas; i++) {
+  ////            datas.add(new data("Eva Mall " + ++lastdataId, i <= numdatas / 2));
+  ////        }
+
 
 
 
@@ -67,34 +78,78 @@
   addMoney=findViewById(R.id.addMoney);
   scaleUp= AnimationUtils.loadAnimation(this,R.anim.scale_up);
 
-
   scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down);
 
-
   textViewBalance=findViewById(R.id.textViewBalance);
-  //##// firebase
-  // creating a variable for
-  // our Firebase Database.
-  FirebaseDatabase firebaseDatabase;
 
-  // creating a variable for our
-  // Database Reference for Firebase.
-  DatabaseReference databaseReference;
+  //set real database balance to the textViewBalance
+
+
+  DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("User");
+  Query checkUserDatabase1 = reference1.equalTo("kasl");
+  checkUserDatabase1.addValueEventListener(new ValueEventListener() {
+                                           @Override
+                                           public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                            for(DataSnapshot snapshot1:snapshot.getChildren()) {
+                                             String mWalletMoney=snapshot1.child("wallet").getValue(String.class);
+//                                             numberPlate = snapshot1.child("vehiclePlateNo").getValue(String.class);
+//                                             inTime = snapshot1.child("inTime").getValue(String.class);
+//                                             outTime = snapshot1.child("outTime").getValue(String.class);
+                                             //   int tmpFee = snapshot1.child("fee").getValue(Integer.class);
+                                             //    fees=Integer.toString(tmpFee);
+//                                             arrNumber.add(new LogsModel(numberPlate, "fees", inTime, outTime));
+                                             // System.out.println(numberPlate + "\n" + fees + "\n" + inTime + "\n" + outTime);
+                                             textViewBalance.setText(mWalletMoney);
+
+                                            }
+                                           }
+
+                                           @Override
+                                           public void onCancelled(@NonNull DatabaseError error) {
+
+                                           }});
+
+
+                                           //firebase
+  FirebaseDatabase firebaseDatabase;
   firebaseDatabase = FirebaseDatabase.getInstance();
 
-  // below line is used to get
-  // reference for our database.
-  databaseReference = firebaseDatabase.getReference("Balance");
+  DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
 
-  ///--here
-  int total_balance=30;
-//  total_balance=setData(databaseReference,textViewBalance);
+//  setData(databaseReference,textViewBalance);
+
+  /*
+  Continue.setOnClickListener(new View.OnClickListener() {
+   @Override
+   public void onClick(View view) {
+    String added_amoount=editTextAddAmount.getText().toString();
+    int editAmount=Integer.parseInt(added_amoount);
+    if(added_amoount.isEmpty()){
+     Toast.makeText(add_balance.this, "Please Enter a Amount!!", Toast.LENGTH_SHORT).show();
+    }else{
+     //set data
+                    /*
+                    DatabaseReference databaseReference1=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
+                    databaseReference1.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int value = snapshot.child("amt").getValue(Integer.class);  //-->>>> retrieved from  database
+
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+     FirebaseDatabase.getInstance().getReference("programing knowladge").child("amt").setValue(arr[0]+editAmount);
+     Toast.makeText(add_balance.this, "Rs. "+added_amoount+" added", Toast.LENGTH_SHORT).show();
+     finish();
 
 
-
-
-
-
+    }
+   }
+  }); */
 
   addMoney.setOnTouchListener(new View.OnTouchListener() {
    @Override
@@ -115,46 +170,29 @@
 
 
     Intent intent=new Intent(getApplicationContext(),add_balance.class);
-//    Bundle bundle=new Bundle();
-//    bundle.putInt("number1",10);
-//
-//    intent.putExtras(bundle);
     startActivity(intent);
    }
   });
 
-//  activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-//   @Override
-//   public void onActivityResult(ActivityResult result) {
-//    if (result.getResultCode()== RESULT_OK)
-//    {
-//     Intent intent = result.getData();
-//     int added = intent.getIntExtra("added", -1);
-//     Toast.makeText(getApplicationContext(), added+" money added", Toast.LENGTH_SHORT).show();
-//    }
-//   }
-//  });
 
 
 
 
 
 
-
-  //button touched
-//  btn1=findViewById(R.id.message_button);
-
-
-
-
-
+  //^^^^^^Transaction Loading
 
  //recycler view
  // Lookup the recyclerview in activity layout
  RecyclerView recyclerViewData=(RecyclerView) findViewById(R.id.rvdatas) ;
 
  // Initialize data
- datas = data.createdatasList(20);
+
+// datas = data.createdatasList(20);
+
+  DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
+  Query checkUserDatabase = reference.orderByChild("transactionId");
+  datas=getFireBaseData(checkUserDatabase);
 
  // Create adapter passing in the sample user data
  DataAdapter adapter = new DataAdapter(datas);
@@ -164,13 +202,12 @@
  recyclerViewData.setLayoutManager(new LinearLayoutManager(this));
  // That's all!
 
- datas.addAll(data.createdatasList(5));
+// datas.addAll(data.createdatasList(5));
 
  // Add a new contact
 // datas.add(0, new data("Barney", true));
 // // Notify the adapter that an item was inserted at position 0
 // adapter.notifyItemInserted(0);
-
 
  RecyclerView.ItemDecoration itemDecoration = new
  DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -200,19 +237,10 @@
  SnapHelper snapHelper = new LinearSnapHelper();
  snapHelper.attachToRecyclerView(recyclerViewData);
 
-
-
- //make toast
-
-
-
-
-
  //toolbar
  //step -1
  toolbar=findViewById(R.id.toolbar);
  setSupportActionBar(toolbar);
-
 
  //step -2
  //        if(getSupportActionBar()!=null){
@@ -221,44 +249,19 @@
  //        }
  }
 
-
-
   //for read data into a firebase
-  private int setData(@NonNull DatabaseReference databaseReference, TextView tbalance){
-
-   int[] total_balance = {0};
+  private void setData(@NonNull DatabaseReference databaseReference, TextView tbalance){
    databaseReference.addValueEventListener(new ValueEventListener() {
-    @SuppressLint("SetTextI18n")
     @Override
-    public void onDataChange(@NonNull DataSnapshot snapshot) {
-     // this method is call to get the realtime
-     // updates in the data.
-     // this method is called when the data is
-     // changed in our Firebase console.
-     // below line is for getting the data from
-     // snapshot of our database.
-     int value = Integer.parseInt(snapshot.getValue(String.class));  //-->>>> retrieved from  database
-     // after getting the value we are setting
-     // our value to our text view in below line.
-     total_balance[0] =value;
-     tbalance.setText(value);
-//              Toast.makeText(add_balance.this, "Rs. "+value+" added", Toast.LENGTH_SHORT).show();
+    public void onDataChange( DataSnapshot snapshot) {
+     int value = snapshot.child("amt").getValue(Integer.class);
+     tbalance.setText("Rs "+value);
     }
-
-
-
-
-
-
-
     @Override
     public void onCancelled(@NonNull DatabaseError error) {
-     // calling on cancelled method when we receive
-     // any error or we are not able to get the data.
      Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
     }
    });
-   return total_balance[0];
   }
 
  //option menu

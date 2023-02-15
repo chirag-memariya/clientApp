@@ -38,14 +38,19 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(DataAdapter.ViewHolder holder, int position) {
         // Get the data model based on position
-        data contact = mdatas.get(position);
+        data datas = mdatas.get(position);
 
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
-        textView.setText(contact.getName());
+        textView.setText(datas.getVehiclePlateNo());
+
+        //subtitle
+        TextView textView1=holder.nameTextView;
+        textView.setText(datas.getDatetime());
+
         Button button = holder.messageButton;
-        button.setText(contact.isOnline() ? "-10" : "+29");
-        button.setEnabled(contact.isOnline());
+        button.setText(datas.getFee());
+//        button.setEnabled(contact.isOnline());
     }
 
     // Returns the total count of items in the list

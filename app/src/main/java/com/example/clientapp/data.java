@@ -28,6 +28,13 @@ import android.view.Display;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -35,37 +42,79 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class data extends Context {
-    private String mName;
-    private boolean mOnline;
+    private static String mVehiclePlateNo;
+    private static String mDatetime;
+    private int mWalletAmount;
+    private static int mFee;
 
-    public data(String name, boolean online) {
-        mName = name;
-        mOnline = online;
+    public data(String vehiclePlateNo, String datetime,int walletAmount,int fee) {
+        mVehiclePlateNo = vehiclePlateNo;
+        mDatetime=datetime;
+        mWalletAmount=walletAmount;
+        mFee=fee;
     }
 
-    public String getName() {
-        return mName;
+    public String getVehiclePlateNo() {
+        return mVehiclePlateNo;
     }
 
-    public boolean isOnline() {
-        return mOnline;
+    public String getDatetime() {
+        return mDatetime;
     }
+
+    public int getWalletAmount(){
+        return mWalletAmount;
+    }
+    public int getFee(){
+        return mFee;
+    }
+
+    public static ArrayList<data> getFireBaseData(Query checkUserDatabase){
+        ArrayList<data> datas=new ArrayList<>();
+   /*
+   mReference.child("user").orderByChild("userId").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+             //deal with data object
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            //toastMsg(databaseError.getMessage());
+            Log.e(TAG, "onCancelled: " + databaseError.getMessage());
+        }
+    });
+   */
+        checkUserDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(DataSnapshot snapshot1:snapshot.getChildren()) {
+                    String mVehiclePlateNo = snapshot1.child("vehiclePlateNo").getValue(String.class);
+                    String mDatetime = snapshot1.child("inTime").getValue(String.class);
+                    Integer mFee = snapshot1.child("fee").getValue(Integer.class);
+                    datas.add(new data(mVehiclePlateNo, mDatetime, 300,mFee));
+                     System.out.println(mVehiclePlateNo + "\n" + mDatetime + "\n" + mFee + "\n" + "300");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        return datas;
+    }
+
+
+
+
 
     private static int lastdataId = 0;
 
-    public static ArrayList<data> createdatasList(int numdatas) {
-        ArrayList<data> datas = new ArrayList<data>();
-
-
-
-        for (int i = 1; i <= numdatas; i++) {
-            datas.add(new data("Eva Mall " + ++lastdataId, i <= numdatas / 2));
-        }
-
-        return datas;
-    }
 
     @Override
     public AssetManager getAssets() {

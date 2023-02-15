@@ -3,7 +3,6 @@ package com.example.clientapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +14,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class add_balance extends AppCompatActivity {
@@ -84,8 +82,8 @@ public class add_balance extends AppCompatActivity {
 
         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
 
-
-        setData(databaseReference,Tbalance);
+        int arr[]=new int[2];
+        setData(databaseReference,Tbalance,arr);
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,25 +92,23 @@ public class add_balance extends AppCompatActivity {
                 if(added_amoount.isEmpty()){
                     Toast.makeText(add_balance.this, "Please Enter a Amount!!", Toast.LENGTH_SHORT).show();
                 }else{
-
-
-
                     //set data
+                    /*
                     DatabaseReference databaseReference1=FirebaseDatabase.getInstance().getReference().child("programing knowladge");
                     databaseReference1.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             int value = snapshot.child("amt").getValue(Integer.class);  //-->>>> retrieved from  database
-                            FirebaseDatabase.getInstance().getReference("programing knowladge").child("amt").setValue(value+editAmount);
-                            Toast.makeText(add_balance.this, "Rs. "+added_amoount+" added", Toast.LENGTH_SHORT).show();
-                            finish();
+
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
                         }
-                    });
-
+                    }); */
+                    FirebaseDatabase.getInstance().getReference("programing knowladge").child("amt").setValue(arr[0]+editAmount);
+                    Toast.makeText(add_balance.this, "Rs. "+added_amoount+" added", Toast.LENGTH_SHORT).show();
+                    finish();
 
 
                 }
@@ -212,19 +208,20 @@ public class add_balance extends AppCompatActivity {
 
 
     //for read data into a firebase
-    private int setData(@NonNull DatabaseReference databaseReference, TextView tbalance){
+    private int setData(@NonNull DatabaseReference databaseReference, TextView tbalance, int[] arr){
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange( DataSnapshot snapshot) {
                 int value = snapshot.child("amt").getValue(Integer.class);
+                arr[0]=value;
                 tbalance.setText(value+" .Cr");
-                Toast.makeText(add_balance.this, "Rs. "+value+" added", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
             }
         });
+        return arr[0];
     }
 
 }
