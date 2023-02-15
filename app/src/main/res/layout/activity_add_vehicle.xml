@@ -29,7 +29,8 @@
             android:gravity="center"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:backgroundTint="#395922"
+            android:textColor="@color/black"
+            android:backgroundTint="#4785E1"
             android:text="Add" />
 
         <Button
@@ -39,8 +40,9 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:insetTop="0dp"
+            android:textColor="@color/black"
             android:insetBottom="0dp"
-            android:backgroundTint="#BC4848"
+            android:backgroundTint="#659CED"
             android:gravity="center"
             android:text="Remove " />
 

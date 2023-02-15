@@ -7,10 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".AddVehicle">
 
-
-
-
-
     <TextView
         android:id="@+id/idTVRegister"
         android:layout_width="match_parent"
@@ -23,7 +19,7 @@
         android:text="Enter the Vehicle detail "
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="18sp"
         />
 
@@ -37,8 +33,8 @@
         android:hint="Enter Vechile Number"
         style="@style/TextInputLayout"
         android:padding="5dp"
-        android:textColorHint="@color/white"
-        app:hintTextColor="@color/white"
+        android:textColorHint="@color/black"
+        app:hintTextColor="@color/black"
         >
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -46,8 +42,8 @@
             android:id="@+id/idEdtVechile"
             android:textStyle="bold"
             android:inputType="textEmailAddress"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
             android:textSize="14sp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,8 +57,9 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="20dp"
         android:text="Add vechile"
-        android:backgroundTint="#604949"
+        android:backgroundTint="#8BB4F1"
         android:textAllCaps="false"
+        android:textColor="@color/black"
         android:textStyle="bold" />
 
 
@@ -78,8 +75,8 @@
         android:hint="Enter Vechile Number"
         android:backgroundTint="#769E99"
         android:padding="5dp"
-        android:textColorHint="@color/white"
-        app:hintTextColor="@color/white">
+        android:textColorHint="@color/black"
+        app:hintTextColor="@color/black">
 
         <Spinner
             android:id="@+id/selectCategoeryspinner"
