@@ -116,7 +116,7 @@ public class LogsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 VehicleNumber vehicleNumber=(VehicleNumber) parent.getItemAtPosition(position);
                 valueFromSpinner=vehicleNumber.getNumber();
-                Toast.makeText(LogsActivity.this, "hi"+valueFromSpinner, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LogsActivity.this, "hi"+valueFromSpinner, Toast.LENGTH_SHORT).show();
                 LogsAdapter adapter=new LogsAdapter(getApplicationContext(), arrNumber,valueFromSpinner);
                 recyclerView.setAdapter(adapter);
 //                for(int i=0;i<arrNumber.size();i++){
