@@ -64,7 +64,7 @@ public class add_balance extends AppCompatActivity {
                     phoneFromdb = snapshot1.child("phone").getValue(String.class);
                     passwordfromdb = snapshot1.child("password").getValue(String.class);
                     WalletMoney[0] =mWalletMoney;
-                    Tbalance.setText(mWalletMoney+" paisaa");
+                    Tbalance.setText(mWalletMoney);
                 }
             }
             @Override

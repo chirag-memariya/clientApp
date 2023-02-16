@@ -87,10 +87,10 @@
                     tools:ignore="MissingConstraints">
 
                     <TextView
-                        android:id="@+id/textViewBalance"
+                        android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="123"
+                        android:background="@drawable/baseline_currency_rupee_24"
                         android:textColor="#ffffff"
                         android:textSize="23sp"
                         android:textStyle="bold"
@@ -101,12 +101,12 @@
                         app:layout_constraintVertical_bias="0.0" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/textViewBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=".paisa"
+                        android:text="123"
                         android:textColor="#ffffff"
-                        android:textSize="23sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                         app:layout_constraintEnd_toEndOf="@+id/imageView3"
