@@ -23,28 +23,6 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class walletActivity extends AppCompatActivity {
 
-/*
-
-package com.example.clientapp;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-public class Wallet_Upadate extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wallet_upadate);
-
-
-    }
-}
-
-
-
-*/
 
 
     ArrayList<data> datas;
@@ -64,7 +42,7 @@ public class Wallet_Upadate extends AppCompatActivity {
         RecyclerView recyclerViewData=(RecyclerView) findViewById(R.id.rvdatas) ;
 
         // Initialize data
-        datas = data.createdatasList(20);
+//        datas = data.createdatasList(20);
 
         // Create adapter passing in the sample user data
         DataAdapter adapter = new DataAdapter(datas);
@@ -74,10 +52,10 @@ public class Wallet_Upadate extends AppCompatActivity {
         recyclerViewData.setLayoutManager(new LinearLayoutManager(this));
         // That's all!
 
-        datas.addAll(data.createdatasList(5));
+//        datas.addAll(data.createdatasList(5));
 
         // Add a new contact
-        datas.add(0, new data("Barney", true));
+//        datas.add(0, new data("Barney", true));
 // Notify the adapter that an item was inserted at position 0
         adapter.notifyItemInserted(0);
 

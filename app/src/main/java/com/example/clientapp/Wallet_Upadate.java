@@ -1,5 +1,7 @@
  package com.example.clientapp;
 
+
+ import androidx.activity.result.ActivityResultLauncher;
  import androidx.annotation.NonNull;
  import androidx.appcompat.app.AppCompatActivity;
  import androidx.appcompat.widget.Toolbar;
@@ -10,13 +12,25 @@
  import androidx.recyclerview.widget.SnapHelper;
 
 
+ import android.content.Intent;
  import android.os.Bundle;
+ import android.os.SystemClock;
  import android.view.Menu;
  import android.view.MenuInflater;
  import android.view.MenuItem;
  import android.view.MotionEvent;
- import android.widget.Button;
+ import android.view.View;
+ import android.view.animation.Animation;
+ import android.view.animation.AnimationUtils;
+ import android.widget.TextView;
  import android.widget.Toast;
+
+ import com.google.firebase.database.DataSnapshot;
+ import com.google.firebase.database.DatabaseError;
+ import com.google.firebase.database.DatabaseReference;
+ import com.google.firebase.database.FirebaseDatabase;
+ import com.google.firebase.database.Query;
+ import com.google.firebase.database.ValueEventListener;
 
  import java.util.ArrayList;
 
@@ -25,17 +39,22 @@
  public class Wallet_Upadate extends AppCompatActivity {
 
 
+//Anils Code
+//ArrayList<TransactionModel> arrNumber =new ArrayList<>();
+//  RecyclerView recyclerView;
+//  String numberPlate;
+//  String inTime,outTime;
+  //End
 
- ArrayList<data> datas;
-
-
-
+ ArrayList<TransactionModel> datas=new ArrayList<>();
+  RecyclerView recyclerViewData;
+  ArrayList<String> vehiclePlateNoList=new ArrayList<>();
  Toolbar toolbar;
-
- public  Button btn1;
-
-
-
+ ArrayList<DataAdapter> newList;
+ //text add money button
+  TextView addMoney;
+  TextView textViewBalance;
+  Animation scaleUp,scaleDown;
 
  @Override
  protected void onCreate(Bundle savedInstanceState) {
@@ -43,35 +62,202 @@
  setContentView(R.layout.activity_wallet_upadate);
 
 
- //button touched
-  btn1=findViewById(R.id.message_button);
 
 
 
+ //Anil Code
+
+//
+//  recyclerView = findViewById(R.id.rvdatas);
+//  recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//  DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
+//  Query checkUserDatabase = reference.orderByChild("transactionId");
+//  checkUserDatabase.addValueEventListener(new ValueEventListener() {
+//   @Override
+//   public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//     numberPlate = snapshot1.child("vehiclePlateNo").getValue(String.class);
+//     inTime = snapshot1.child("inTime").getValue(String.class);
+//     outTime = snapshot1.child("outTime").getValue(String.class);
+//     Integer tmpFee = snapshot1.child("fee").getValue(Integer.class);
+//     //    fees=Integer.toString(tmpFee);
+//     arrNumber.add(new TransactionModel(numberPlate, tmpFee, inTime));
+//     // System.out.println(numberPlate + "\n" + fees + "\n" + inTime + "\n" + outTime);
+//    }
+//   }
+//
+//   @Override
+//   public void onCancelled(@NonNull DatabaseError error) {
+//    //  Toast.makeText(LogsActivity.this, "Failed to read value.", Toast.LENGTH_SHORT).show();
+//   }
+//  });
+//
+//
+//  SystemClock.sleep(2000);
+//  TransactionAdapter adapter = new TransactionAdapter(getApplicationContext(), arrNumber);
+//  recyclerView.setAdapter(adapter);
+//
+//
+// }
+ //ends here
+
+  //^^^^^^Transaction Loading
+  //recycler view
+  // Lookup the recyclerview in activity layout
+  recyclerViewData= findViewById(R.id.rvdatas);
+  recyclerViewData.setLayoutManager(new LinearLayoutManager(this));
+
+ //add money text view
+  addMoney=findViewById(R.id.addMoney);
+  scaleUp= AnimationUtils.loadAnimation(this,R.anim.scale_up);
+
+  scaleDown=AnimationUtils.loadAnimation(this,R.anim.scale_down);
+
+  textViewBalance=findViewById(R.id.textViewBalance);
+
+  //set real database balance to the textViewBalance
+  String cureent =global_username.getUserid();
+  DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("User");
+  Query checkUserDatabase1 = reference1.orderByChild("userId").equalTo(cureent);
+  checkUserDatabase1.addValueEventListener(new ValueEventListener() {
+                                           @Override
+                                           public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                            for(DataSnapshot snapshot1:snapshot.getChildren()) {
+                                             String mWalletMoney=snapshot1.child("wallet").getValue(String.class);
+                                             textViewBalance.setText(mWalletMoney);
+                                            }
+                                           }
+                                           @Override
+                                           public void onCancelled(@NonNull DatabaseError error) {
+                                           }});
+
+
+//firebase
+
+
+//  getVehiclePlatenNo
+  //i need to store this data into array and print into a transaction id section
+  DatabaseReference reference3 = FirebaseDatabase.getInstance().getReference("vehicle");
+  Query checkUserDatabase3 = reference3.orderByChild("userId").equalTo(cureent);
+  checkUserDatabase3.addValueEventListener(new ValueEventListener() {
+   @Override
+   public void onDataChange(@NonNull DataSnapshot snapshot) {
+    for(DataSnapshot snapshot1:snapshot.getChildren()) {
+     String mvehicalePlateNo=snapshot1.child("vehiclePlateNo").getValue(String.class);
+     vehiclePlateNoList.add(mvehicalePlateNo);
+     System.out.println(mvehicalePlateNo);
+    }
+    for(String str:vehiclePlateNoList){
+     System.out.println(str);
+     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
+     Query checkUserDatabase = reference.orderByChild("vehiclePlateNo").equalTo(str);
+
+     checkUserDatabase.addValueEventListener(new ValueEventListener() {
+
+      @Override
+      public void onDataChange(@NonNull DataSnapshot snapshot) {
+       //    Toast.makeText(Wallet_Upadate.this, "it's here bc", Toast.LENGTH_SHORT).show();
+       for(DataSnapshot snapshot1:snapshot.getChildren()) {
+        String mVehiclePlateNo = snapshot1.child("vehiclePlateNo").getValue(String.class);
+        String mDatetime = snapshot1.child("inTime").getValue(String.class);
+        Integer mFee = snapshot1.child("fee").getValue(Integer.class);
+        datas.add(new TransactionModel(mVehiclePlateNo, mFee,mDatetime));
+        System.out.println(datas.size());
+
+       }
+      // SystemClock.sleep(2000);
+       TransactionAdapter adapter=new TransactionAdapter(getApplicationContext(), datas);
+       recyclerViewData.setAdapter(adapter);
+      }
+      @Override
+      public void onCancelled(@NonNull DatabaseError error) {
+      }
+     });
+    }
+
+
+   }
+
+   @Override
+   public void onCancelled(@NonNull DatabaseError error) {
+
+   }
+  });
+
+  for (String str :
+          vehiclePlateNoList) {
+   System.out.println(str);
+
+  }
 
 
 
- //recycler view
- // Lookup the recyclerview in activity layout
- RecyclerView recyclerViewData=(RecyclerView) findViewById(R.id.rvdatas) ;
+  addMoney.setOnTouchListener(new View.OnTouchListener() {
+   @Override
+   public boolean onTouch(View view, MotionEvent motionEvent) {
+    if(motionEvent.getAction()==MotionEvent.ACTION_UP){
+     addMoney.startAnimation(scaleUp);
+
+    } else if (motionEvent.getAction()==MotionEvent.ACTION_DOWN) {
+     addMoney.startAnimation(scaleDown);
+    }
+    return false;
+   }
+  });
+
+  addMoney.setOnClickListener(new View.OnClickListener() {
+   @Override
+   public void onClick(View view) {
+    Intent intent=new Intent(getApplicationContext(),add_balance.class);
+    startActivity(intent);
+   }
+  });
+
 
  // Initialize data
- datas = data.createdatasList(20);
 
- // Create adapter passing in the sample user data
- DataAdapter adapter = new DataAdapter(datas);
- // Attach the adapter to the recyclerview to populate items
- recyclerViewData.setAdapter(adapter);
- // Set layout manager to position the items
- recyclerViewData.setLayoutManager(new LinearLayoutManager(this));
- // That's all!
+//  for(String str:vehiclePlateNoList){
+//   System.out.println(str);
+//  DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
+//  Query checkUserDatabase = reference.orderByChild("vehiclePlateNo").equalTo(str);
+//
+//   checkUserDatabase.addValueEventListener(new ValueEventListener() {
+//
+//    @Override
+//    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//     //    Toast.makeText(Wallet_Upadate.this, "it's here bc", Toast.LENGTH_SHORT).show();
+//     for(DataSnapshot snapshot1:snapshot.getChildren()) {
+//      String mVehiclePlateNo = snapshot1.child("vehiclePlateNo").getValue(String.class);
+//      String mDatetime = snapshot1.child("inTime").getValue(String.class);
+//      Integer mFee = snapshot1.child("fee").getValue(Integer.class);
+//      datas.add(new data(mVehiclePlateNo, mDatetime, "300",mFee));
+//      System.out.println(datas.size());
+//
+//     }
+//    }
+//    @Override
+//    public void onCancelled(@NonNull DatabaseError error) {
+//    }
+//   });
+//  }
 
- datas.addAll(data.createdatasList(5));
 
- // Add a new contact
- datas.add(0, new data("Barney", true));
- // Notify the adapter that an item was inserted at position 0
- adapter.notifyItemInserted(0);
+
+
+  System.out.println(datas.size());
+// // Create adapter passing in the sample user data
+// DataAdapter adapter = new DataAdapter(datas);
+// // Attach the adapter to the recyclerview to populate items
+// recyclerViewData.setAdapter(adapter);
+
+
+
+  // // Set layout manager to position the items
+
+
 
 
  RecyclerView.ItemDecoration itemDecoration = new
@@ -102,19 +288,10 @@
  SnapHelper snapHelper = new LinearSnapHelper();
  snapHelper.attachToRecyclerView(recyclerViewData);
 
-
-
- //make toast
-
-
-
-
-
  //toolbar
  //step -1
  toolbar=findViewById(R.id.toolbar);
  setSupportActionBar(toolbar);
-
 
  //step -2
  //        if(getSupportActionBar()!=null){
@@ -122,6 +299,7 @@
  getSupportActionBar().setTitle("WalletPage");
  //        }
  }
+
 
  //option menu
 

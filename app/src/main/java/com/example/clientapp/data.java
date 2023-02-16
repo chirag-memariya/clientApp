@@ -24,9 +24,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
 import android.view.Display;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,35 +43,48 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class data extends Context {
-    private String mName;
-    private boolean mOnline;
+    private static String mVehiclePlateNo;
+    private static String mDatetime;
+    private String mWalletAmount;
+    private static int mFee;
 
-    public data(String name, boolean online) {
-        mName = name;
-        mOnline = online;
+    public data(String vehiclePlateNo, String datetime,String walletAmount,int fee) {
+        mVehiclePlateNo = vehiclePlateNo;
+        mDatetime=datetime;
+        mWalletAmount=walletAmount;
+        mFee=fee;
     }
 
-    public String getName() {
-        return mName;
+    public static ArrayList<data> createContactsList(int numContacts) {
+        ArrayList<data> contacts = new ArrayList<data>();
+
+//        int lastContactId=0;
+//        for (int i = 1; i <= numContacts; i++) {
+//
+//            contacts.add(new data("Person " + ++lastContactId, i <= numContacts / 2));
+//        }
+
+        return contacts;
     }
 
-    public boolean isOnline() {
-        return mOnline;
+    public String getVehiclePlateNo() {
+        return mVehiclePlateNo;
     }
 
-    private static int lastdataId = 0;
-
-    public static ArrayList<data> createdatasList(int numdatas) {
-        ArrayList<data> datas = new ArrayList<data>();
-
-        for (int i = 1; i <= numdatas; i++) {
-            datas.add(new data("Transaction " + ++lastdataId, i <= numdatas / 2));
-        }
-
-        return datas;
+    public String getDatetime() {
+        return mDatetime;
     }
+
+    public String getWalletAmount(){
+        return mWalletAmount;
+    }
+    public int getFee(){
+        return mFee;
+    }
+
 
     @Override
     public AssetManager getAssets() {

@@ -11,6 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     //Toolbar
     Toolbar toolbar;
@@ -27,6 +32,34 @@ public class MainActivity extends AppCompatActivity {
 
         SpinnerData spinnerData=new SpinnerData();
        // VehicleNumber.initVehicleNumbers();
+
+
+
+
+        //Firebase
+
+
+        //Add or write a data to the database system
+//        FirebaseDatabase.getInstance().getReference().child("programing knowladge").child("android").setValue("abcd");
+//
+//        //create a more than one child
+//        HashMap<String,Object> stringHashMap=new HashMap<>();
+//        stringHashMap.put("Name","Chirag");
+//        stringHashMap.put("Email","memariyachirag@gmail.com");
+//
+//        FirebaseDatabase.getInstance().getReference().child("programing knowladge").child("Multiple Values").updateChildren(stringHashMap);
+//        FirebaseDatabase.getInstance().getReference().child("Languages").child("n1").setValue("java");
+
+
+
+
+
+
+
+
+
+
+
 
 
         //Toolbar
@@ -66,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         walletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 //                Intent i=new Intent(MainActivity.this,walletActivity.class);
                 Intent i=new Intent(MainActivity.this,Wallet_Upadate.class);
                 startActivity(i);

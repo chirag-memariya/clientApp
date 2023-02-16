@@ -49,6 +49,11 @@
             android:label="History"
             android:theme="@style/Theme1.ClientApp"/>
         <activity
+            android:name=".add_balance"
+            android:exported="false"
+            android:label="Add Balance"
+            android:theme="@style/Theme1.ClientApp"/>
+        <activity
 
             android:name=".splash_screen"
             android:exported="true"
