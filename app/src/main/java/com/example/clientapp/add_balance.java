@@ -2,9 +2,13 @@ package com.example.clientapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +29,7 @@ public class add_balance extends AppCompatActivity {
     EditText editTextAddAmount;
     Button Continue;
     TextView Tbalance;
+    Toolbar toolbar;
 
     String nameFromdb , emailfromdb , passwordfromdb , phoneFromdb ;
     String mWalletMoney;
@@ -125,6 +130,15 @@ public class add_balance extends AppCompatActivity {
                 }
             }
         });
+
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //step -2
+        //        if(getSupportActionBar()!=null){
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Add Money");
+        //        }
     }
 
 
@@ -146,4 +160,34 @@ public class add_balance extends AppCompatActivity {
 //    }
 
 
+
+
+
+    //option menu
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        new MenuInflater(this).inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemID=item.getItemId();
+
+        if(itemID==R.id.newbtn){
+            Toast.makeText(getApplicationContext(),"New File is Created",Toast.LENGTH_SHORT).show();
+        }
+        else if(itemID==R.id.edit){
+            Toast.makeText(getApplicationContext(),"File Edit",Toast.LENGTH_SHORT).show();
+
+        }
+        else if(itemID==R.id.save){
+            Toast.makeText(getApplicationContext(),"File Saved",Toast.LENGTH_SHORT).show();
+        }
+        else{
+            super.onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);}
 }
