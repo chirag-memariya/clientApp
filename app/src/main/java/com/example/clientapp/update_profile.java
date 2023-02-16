@@ -114,6 +114,8 @@ public class update_profile extends AppCompatActivity {
                     }
                 }else if(! new_email.getText().toString().matches(emailPattern)){
                     new_email.setError("Enter User Valid Email");
+                }else if( new_phone.getText().toString().length() != 10){
+                    new_phone.setError("Enter User Valid Phone No");
                 }
                 else{
 

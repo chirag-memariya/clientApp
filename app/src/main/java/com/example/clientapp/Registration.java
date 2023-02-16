@@ -81,8 +81,8 @@ public class Registration extends AppCompatActivity {
                         user_con_password.setError("Enter Comform Password");
                     }
                 }else{
-                    if(userid.length() < 6 || ! email.matches(emailPattern) || phone.length() < 10  ||  password.length() < 6 ){
-                        if( username.length() <= 6 ){
+                    if(userid.length() < 6 || ! email.matches(emailPattern) || phone.length() < 10 || phone.length() > 10 ||  password.length() < 6 ){
+                        if( userid.length() < 6 ){
                             user_id.setError("Enter Long UserName");
                         }
 
@@ -90,7 +90,7 @@ public class Registration extends AppCompatActivity {
                             user_email.setError("Enter Valid Email");
                         }
 
-                        if( phone.length() < 10 ){
+                        if( phone.length() > 10 && phone.length() < 10 ){
                             user_phone.setError("Enter Valid Phone Number");
                         }
 
@@ -145,6 +145,7 @@ public class Registration extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(),"Welcome " + username,Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
+                                    finish();
                                 }
                             }
 

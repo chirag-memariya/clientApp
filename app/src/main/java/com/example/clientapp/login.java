@@ -115,6 +115,7 @@ public class login extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext(),"Welcome Back " + nameFromDB,Toast.LENGTH_LONG).show();
                         startActivity(intent);
+                        finish();
                     } else {
                         userpassword.setError("Invalid Credentials");
                         userpassword.requestFocus();
