@@ -103,6 +103,7 @@ public class LogsActivity extends AppCompatActivity {
         SpinnerAdapter costomAdapter=new SpinnerAdapter(this,R.layout.costom_spinner_adapter,VehicleNumber.getVehicleNumbers());
         spinner.setAdapter(costomAdapter);
 
+        spinner.setSelection(0);
 //        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -115,6 +116,7 @@ public class LogsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 VehicleNumber vehicleNumber=(VehicleNumber) parent.getItemAtPosition(position);
                 valueFromSpinner=vehicleNumber.getNumber();
+                Toast.makeText(LogsActivity.this, "hi"+valueFromSpinner, Toast.LENGTH_SHORT).show();
                 LogsAdapter adapter=new LogsAdapter(getApplicationContext(), arrNumber,valueFromSpinner);
                 recyclerView.setAdapter(adapter);
 //                for(int i=0;i<arrNumber.size();i++){

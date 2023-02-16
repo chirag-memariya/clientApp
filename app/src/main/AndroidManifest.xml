@@ -52,7 +52,7 @@
             android:name=".add_balance"
             android:exported="false"
             android:label="Add Balance"
-            android:theme="@style/Theme1.ClientApp"/>
+            android:theme="@style/MyTheme.NoActionBar.white"/>
         <activity
 
             android:name=".splash_screen"

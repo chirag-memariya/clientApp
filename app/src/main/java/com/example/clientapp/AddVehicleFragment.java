@@ -2,6 +2,7 @@ package com.example.clientapp;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.viewmodel.CreationExtras;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +36,7 @@ public class AddVehicleFragment extends Fragment {
     }
 
 
+    String numberPattern = "[a-zA-Z]{2}+[0-9]{2}+[a-zA-Z]{2}+[0-9]{1,4}";
    // private Spinner spinner;
    // ProgressBar progressBar;
     FirebaseDatabase database;
@@ -65,6 +68,7 @@ public class AddVehicleFragment extends Fragment {
 
         current_id=global_username.getUserid();
 
+        temp=1;
 
 
 
@@ -77,17 +81,21 @@ public class AddVehicleFragment extends Fragment {
               //  progressBar.setVisibility(View.VISIBLE);
                 vehicleNumber=editText.getText().toString().trim();
                 if(vehicleNumber.isEmpty()){
-                    Toast.makeText(getContext(),"Please Enter Vehicle Number",LENGTH_SHORT).show();
+                    editText.setError("Please Enter Vehicle Number ");
+             //       Toast.makeText(getContext(),"Please Enter Vehicle Number",LENGTH_SHORT).show();
                   //  progressBar.setVisibility(View.GONE);
-                }else if(vehicleNumber.length()<5){
-                    Toast.makeText(getContext(),"Please Enter Valid Vehicle Number",LENGTH_SHORT).show();
+                }else if(!vehicleNumber.matches(numberPattern)){
+                    editText.setError("Please Enter Valid Vehicle Number ");
+                //    Toast.makeText(getContext(),"Please Enter Valid Vehicle Number",LENGTH_SHORT).show();
                  //   progressBar.setVisibility(View.GONE);
-                } else  {
+                }
+                else  {
 //                    database = FirebaseDatabase.getInstance();
 //                    reference = database.getReference("vehicle");
                  //   Toast.makeText(getContext(),"it is running",LENGTH_SHORT).show();
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("vehicle");
                     Query checkUserDatabase = reference.orderByChild("userId").equalTo(current_id);
+                  //  if(checkUserDatabase.equals(null)){
 
                     checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -95,10 +103,12 @@ public class AddVehicleFragment extends Fragment {
 
                             for(DataSnapshot snapshot1:snapshot.getChildren()) {
                                  fireVehilceNumber=snapshot1.child("vehiclePlateNo").getValue(String.class);
-                                if(vehicleNumber.equals(fireVehilceNumber)){
+                                if(vehicleNumber.equals(fireVehilceNumber)&&!fireVehilceNumber.equals(null)){
+                                    Toast.makeText(getContext(), fireVehilceNumber, LENGTH_SHORT).show();
                                     temp=0;
                                     break;
-                                }else{
+                                } else{
+
                                     temp=1;
 
                                 }
@@ -117,6 +127,9 @@ public class AddVehicleFragment extends Fragment {
 
                          //       progressBar.setVisibility(View.GONE);
                                 Toast.makeText(getContext(),"Vehicle  " + vehicleNumber+" added sucessfully",Toast.LENGTH_LONG).show();
+
+                                Intent intent=new Intent(getContext(),MainActivity.class);
+                                startActivity(intent);
                             }
                         }
 
@@ -125,10 +138,27 @@ public class AddVehicleFragment extends Fragment {
                             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
+                //}                    else{
+//                        Toast.makeText(getContext(), "This is else", LENGTH_SHORT).show();
+//                        Map<String, Object> updates = new HashMap<>();
+//                        updates.put("userId", current_id);
+//                        updates.put("vehiclePlateNo", vehicleNumber);
+//
+//
+//                        String userId = reference.push().getKey();
+//                        reference.child(userId).setValue(updates);
+//
+//                        //       progressBar.setVisibility(View.GONE);
+//                        Toast.makeText(getContext(),"Vehicle  " + vehicleNumber+" added sucessfully",Toast.LENGTH_LONG).show();
+//
+//                        Intent intent=new Intent(getContext(),MainActivity.class);
+//                        startActivity(intent);
+                       // Toast.makeText(getContext(), "hello", LENGTH_SHORT).show();
+                    }
 
 
                 }
-            }
+           // }
         });
 
 
