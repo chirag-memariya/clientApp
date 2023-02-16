@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
         displau_user = findViewById(R.id.display_username);
         Current_user = global_username.getUsername();
         displau_user.setText("Hello "+ Current_user);
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        toolbar=(Toolbar)findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         //        setSupportActionBar(toolbar);
 
         //step -2

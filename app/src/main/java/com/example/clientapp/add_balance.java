@@ -102,7 +102,7 @@ public class add_balance extends AppCompatActivity {
                                     updates.put("name", nameFromdb );
                                     updates.put("email", emailfromdb);
                                     updates.put("phone", phoneFromdb);
-                                    updates.put("password", phoneFromdb);
+                                    updates.put("password", passwordfromdb);
                                     updates.put("wallet", Integer.toString(ans));
 
 
