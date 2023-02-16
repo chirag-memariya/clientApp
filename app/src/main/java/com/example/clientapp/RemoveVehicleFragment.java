@@ -3,6 +3,7 @@ package com.example.clientapp;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,62 +52,73 @@ public class RemoveVehicleFragment extends Fragment {
 
 
         SpinnerAdapter adapter=new SpinnerAdapter(getContext(),R.layout.costom_spinner_adapter,VehicleNumber.getVehicleNumbers());
+        int cnt=adapter.getCount();
+
         removeSpinner.setAdapter(adapter);
-        removeBtn.setOnClickListener(new View.OnClickListener() {
+        removeSpinner.setSelection(0);
+
+
+        removeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                VehicleNumber vehicleNumber=(VehicleNumber) parent.getItemAtPosition(position);
+                valueFromSpinner=vehicleNumber.getNumber();
+            //    Toast.makeText(getContext(), "adapter"+cnt, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getContext(), valueFromSpinner, Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getContext(),valueFromSpinner,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("vehicle");
+        Query applesQuery = ref.orderByChild("userId").equalTo(current_id);
+        if(cnt<=1){
+            removeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getContext(), "Cannot reomve single data", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+            removeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
 
-                removeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        VehicleNumber vehicleNumber=(VehicleNumber) parent.getItemAtPosition(position);
-                        valueFromSpinner=vehicleNumber.getNumber();
-                     //   Toast.makeText(getContext(),valueFromSpinner,Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
-
-
-
-
-
-
-
-
-
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("vehicle");
-                Query applesQuery = ref.orderByChild("userId").equalTo(current_id);
-
-                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot1: dataSnapshot.getChildren()) {
-                            if((snapshot1.child("vehiclePlateNo").getValue(String.class)).equals(valueFromSpinner)){
-                                snapshot1.getRef().removeValue();
-                                Toast.makeText(getContext(),"Removed"+valueFromSpinner,Toast.LENGTH_SHORT).show();
+                    applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapshot1 : dataSnapshot.getChildren()) {
+                                // Toast.makeText(getContext(),"HI"+ valueFromSpinner, Toast.LENGTH_SHORT).show();
+                                if ((snapshot1.child("vehiclePlateNo").getValue(String.class)).equals(valueFromSpinner)) {
+                                    snapshot1.getRef().removeValue();
+                                    Intent intent = new Intent(getContext(), MainActivity.class);
+                                    startActivity(intent);
+                                    Toast.makeText(getContext(), "Removed " + valueFromSpinner, Toast.LENGTH_SHORT).show();
+                                }
+                                //snapshot1.getRef().removeValue();
                             }
-                            //snapshot1.getRef().removeValue();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.e(TAG, "onCancelled", databaseError.toException());
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.e(TAG, "onCancelled", databaseError.toException());
+                        }
+                    });
 
 
+//
 
 //                Toast.makeText(getContext(),"Removed Vehicle "+(removeSpinner.getSelectedItem().toString()),Toast.LENGTH_SHORT).show();
 //                Toast.makeText(getContext(),removeSpinner.getItemAtPosition(removeSpinner.getSelectedItemPosition()).toString(),Toast.LENGTH_SHORT).show();
 //                Toast.makeText(getContext(),""+removeSpinner.getSelectedItem().toString().substring(35),Toast.LENGTH_SHORT).show();
 
-            }
-        });
+                }
+            });
+        }
 
 
         return view;
