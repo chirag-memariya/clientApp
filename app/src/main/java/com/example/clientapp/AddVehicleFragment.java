@@ -36,6 +36,7 @@ public class AddVehicleFragment extends Fragment {
     }
 
 
+    String numberPattern = "[a-zA-Z]{2}+[0-9]{2}+[a-zA-Z]{2}+[0-9]{1,4}";
    // private Spinner spinner;
    // ProgressBar progressBar;
     FirebaseDatabase database;
@@ -80,12 +81,15 @@ public class AddVehicleFragment extends Fragment {
               //  progressBar.setVisibility(View.VISIBLE);
                 vehicleNumber=editText.getText().toString().trim();
                 if(vehicleNumber.isEmpty()){
-                    Toast.makeText(getContext(),"Please Enter Vehicle Number",LENGTH_SHORT).show();
+                    editText.setError("Please Enter Vehicle Number ");
+             //       Toast.makeText(getContext(),"Please Enter Vehicle Number",LENGTH_SHORT).show();
                   //  progressBar.setVisibility(View.GONE);
-                }else if(vehicleNumber.length()<5){
-                    Toast.makeText(getContext(),"Please Enter Valid Vehicle Number",LENGTH_SHORT).show();
+                }else if(!vehicleNumber.matches(numberPattern)){
+                    editText.setError("Please Enter Valid Vehicle Number ");
+                //    Toast.makeText(getContext(),"Please Enter Valid Vehicle Number",LENGTH_SHORT).show();
                  //   progressBar.setVisibility(View.GONE);
-                } else  {
+                }
+                else  {
 //                    database = FirebaseDatabase.getInstance();
 //                    reference = database.getReference("vehicle");
                  //   Toast.makeText(getContext(),"it is running",LENGTH_SHORT).show();
