@@ -47,7 +47,7 @@ class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ProfileViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ProfileViewHolder holder, int position) {
-        if(arrModel.get(position).numberPlate.equals(valueFromSpinner)) {
+       if(arrModel.get(position).numberPlate.equals(valueFromSpinner)) {
             flag=true;
             holder.numberPlate.setText(arrModel.get(position).numberPlate);
             holder.outTime.setText(arrModel.get(position).outTime);
@@ -55,14 +55,14 @@ class LogsAdapter extends RecyclerView.Adapter<LogsAdapter.ProfileViewHolder> {
             holder.fees.setText("" + arrModel.get(position).fees);
        }else{
             flag=false;
-           // holder.
-            holder.numberPlate.setVisibility(View.GONE);
-            holder.outTime.setVisibility(View.GONE);
-            holder.inTime.setVisibility(View.GONE);
+          // holder.
+           holder.numberPlate.setVisibility(View.GONE);
+           holder.outTime.setVisibility(View.GONE);
+          holder.inTime.setVisibility(View.GONE);
             holder.fees.setVisibility(View.GONE);
-
-           //Toast.makeText(context.getApplicationContext(),"No Data found"+arrModel.indexOf(valueFromSpinner),Toast.LENGTH_SHORT).show();
-       }
+//
+//           //Toast.makeText(context.getApplicationContext(),"No Data found"+arrModel.indexOf(valueFromSpinner),Toast.LENGTH_SHORT).show();
+      }
 
     }
 
