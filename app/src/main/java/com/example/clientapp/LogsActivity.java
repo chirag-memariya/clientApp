@@ -34,10 +34,10 @@ public class LogsActivity extends AppCompatActivity {
     ArrayList<LogsModel> userVehicleNumber =new ArrayList<LogsModel>();
     RecyclerView recyclerView;
     Spinner spinner;
-    String numberPlate,current_id,valueFromSpinner;
-    String fees;
+    String numberPlate,valueFromSpinner;
+
     String inTime,outTime;
-    ArrayList<VehicleNumber> vehicleNumberArrayList=new ArrayList<>();
+    //ArrayList<VehicleNumber> vehicleNumberArrayList=new ArrayList<>();
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,23 +50,9 @@ public class LogsActivity extends AppCompatActivity {
 
 
 
-//
-//        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-//        arrNumber.add(new LogsModel("GJ34H3425","500", "Hello","Test"));
-//        arrNumber.add(new LogsModel("BA93PA1948","500","500", "500"));
-//        arrNumber.add(new LogsModel("BA93PA1934","500", "500", "500"));
-//        arrNumber.add(new LogsModel("MH34H3425","500","500", "500"));
-//        arrNumber.add(new LogsModel("BR34H3425","500","500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500","500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500", "500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500", "500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500","500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500", "500", "500"));
-
-//        current_id = global_username.getUserid();
 
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+     
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
         Query checkUserDatabase = reference.orderByChild("transactionId");
@@ -100,6 +86,8 @@ public class LogsActivity extends AppCompatActivity {
         });
 
 
+
+
 ///Test code
 //        current_id=global_username.getUserid();
 //        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("vehicle");
@@ -123,7 +111,7 @@ public class LogsActivity extends AppCompatActivity {
 //                System.out.println(error.getMessage());
 //            }
 //        });
-//
+
 //        ArrayList<LogsModel> model=new ArrayList<>();
 //        for(LogsModel logs:arrNumber){
 //            for(VehicleNumber number:vehicleNumberArrayList){
@@ -177,6 +165,7 @@ public class LogsActivity extends AppCompatActivity {
 
 
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
