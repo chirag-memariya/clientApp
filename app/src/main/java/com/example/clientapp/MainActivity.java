@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     TextView displau_user;
     LinearLayout walletBtn;
     String Current_user;
-    LinearLayout bikeBtn,logBtn;
+    LinearLayout bikeBtn,logBtn , showavalible;
 //    ImageButton walletBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,32 +34,15 @@ public class MainActivity extends AppCompatActivity {
        // VehicleNumber.initVehicleNumbers();
 
 
-
-
-        //Firebase
-
-
-        //Add or write a data to the database system
-//        FirebaseDatabase.getInstance().getReference().child("programing knowladge").child("android").setValue("abcd");
-//
-//        //create a more than one child
-//        HashMap<String,Object> stringHashMap=new HashMap<>();
-//        stringHashMap.put("Name","Chirag");
-//        stringHashMap.put("Email","memariyachirag@gmail.com");
-//
-//        FirebaseDatabase.getInstance().getReference().child("programing knowladge").child("Multiple Values").updateChildren(stringHashMap);
-//        FirebaseDatabase.getInstance().getReference().child("Languages").child("n1").setValue("java");
-
-
-
-
-
-
-
-
-
-
-
+        // parking detail display
+        showavalible = findViewById(R.id.ShowParkngSpace);
+        showavalible.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,Parking_slot.class);
+                startActivity(i);
+            }
+        });
 
 
         //Toolbar
@@ -76,23 +59,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Client Application");
 
         }
-
-        //set toolbar title
-//        toolbar.setTitle("toolbarTitle");
-
-
-
-//        addVehicleBtn=findViewById(R.id.addVehicle);
-//        addVehicleBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i=new Intent(MainActivity.this,AddVehicle.class);
-//                startActivity(i);
-//            }
-//        });
-
-
-
 
 
         walletBtn=findViewById(R.id.wallet);
@@ -138,10 +104,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-//    private void setSupportActionBar(Toolbar toolbar) {
-//    }
-//    public void startLog(View view){
-//        startActivity(new Intent(MainActivity.this, LogsActivity.class));
-//    }
 }

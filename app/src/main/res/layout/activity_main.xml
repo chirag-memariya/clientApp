@@ -16,12 +16,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
+
+
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_banner">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Toolbar Title"
+                            android:layout_gravity="center"
+                            android:id="@+id/toolbar_title" />
                 </androidx.appcompat.widget.Toolbar>
 
                 <androidx.constraintlayout.widget.Guideline
@@ -46,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:text="My Dashboard"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="24sp" />
 
                 <TextView
@@ -206,6 +215,41 @@
                                             android:layout_marginTop="20dp"
                                             android:fontFamily="@font/googlesans_bold"
                                             android:text="Add Vehicle"
+                                            android:textColor="@color/white"
+                                            android:textSize="18sp" />
+
+                                </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="170dp"
+                            android:layout_height="170dp"
+                            android:layout_margin="10dp"
+                            app:cardBackgroundColor="#FAE0C9"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="5dp">
+
+                                <LinearLayout
+                                    android:id="@+id/ShowParkngSpace"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/cardview_background"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="45dp"
+                                            android:layout_height="45dp"
+                                            android:layout_marginTop="18dp"
+                                            android:src="@drawable/bike" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="20dp"
+                                            android:fontFamily="@font/googlesans_bold"
+                                            android:text="Show avalible"
                                             android:textColor="@color/white"
                                             android:textSize="18sp" />
 
