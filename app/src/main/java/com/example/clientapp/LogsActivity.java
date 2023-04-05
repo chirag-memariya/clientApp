@@ -34,10 +34,10 @@ public class LogsActivity extends AppCompatActivity {
     ArrayList<LogsModel> userVehicleNumber =new ArrayList<LogsModel>();
     RecyclerView recyclerView;
     Spinner spinner;
-    String numberPlate,current_id,valueFromSpinner;
-    String fees;
+    String numberPlate,valueFromSpinner;
+
     String inTime,outTime;
-    ArrayList<VehicleNumber> vehicleNumberArrayList=new ArrayList<>();
+    //ArrayList<VehicleNumber> vehicleNumberArrayList=new ArrayList<>();
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,23 +50,9 @@ public class LogsActivity extends AppCompatActivity {
 
 
 
-//
-//        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-//        arrNumber.add(new LogsModel("GJ34H3425","500", "Hello","Test"));
-//        arrNumber.add(new LogsModel("BA93PA1948","500","500", "500"));
-//        arrNumber.add(new LogsModel("BA93PA1934","500", "500", "500"));
-//        arrNumber.add(new LogsModel("MH34H3425","500","500", "500"));
-//        arrNumber.add(new LogsModel("BR34H3425","500","500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500","500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500", "500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500", "500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500","500", "500"));
-//        arrNumber.add(new LogsModel("GJ34H3425","500", "500", "500"));
-
-//        current_id = global_username.getUserid();
 
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+     
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("VehicleHistory");
         Query checkUserDatabase = reference.orderByChild("transactionId");
@@ -81,7 +67,13 @@ public class LogsActivity extends AppCompatActivity {
                     Integer tmpFee = snapshot1.child("fee").getValue(Integer.class);
                 //    fees=Integer.toString(tmpFee);
                     inTime=inTime.substring(0,10)+"\n"+inTime.substring(inTime.indexOf(" "),inTime.indexOf(" ")+6);
-                    outTime=outTime.substring(0,10)+"\n"+outTime.substring(outTime.indexOf(" "),outTime.indexOf(" ")+6);
+                    if(outTime.isEmpty()){
+                        outTime="";
+                        tmpFee=0;
+                    }else {
+                        outTime = outTime.substring(0, 10) + "\n" + outTime.substring(outTime.indexOf(" "), outTime.indexOf(" ") + 6);
+
+                    }
                     arrNumber.add(new LogsModel(numberPlate, tmpFee, inTime, outTime));
                    // System.out.println(numberPlate + "\n" + fees + "\n" + inTime + "\n" + outTime);
                 }
@@ -95,6 +87,40 @@ public class LogsActivity extends AppCompatActivity {
 
 
 
+
+///Test code
+//        current_id=global_username.getUserid();
+//        DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("vehicle");
+//        Query checkVehicleDatabase1 = reference1.orderByChild("userId").equalTo(current_id);
+//
+//        checkVehicleDatabase1.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                vehicleNumberArrayList.clear();
+//
+//                for(DataSnapshot dataSnapshot1:snapshot.getChildren())
+//                {
+//                    String vehilceNumber=dataSnapshot1.child("vehiclePlateNo").getValue(String.class);
+//                    vehicleNumberArrayList.add(new VehicleNumber(vehilceNumber));
+//                }
+//                VehicleNumber.setVehicleNumbers(vehicleNumberArrayList);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                System.out.println(error.getMessage());
+//            }
+//        });
+
+//        ArrayList<LogsModel> model=new ArrayList<>();
+//        for(LogsModel logs:arrNumber){
+//            for(VehicleNumber number:vehicleNumberArrayList){
+//                if(logs.numberPlate.equals(number.getNumber())){
+//                    model.add(new LogsModel(logs.numberPlate, logs.fees, logs.inTime,logs.outTime));
+//                    System.out.println(model);
+//                }
+//            }
+//        }
 
 
 
@@ -117,7 +143,9 @@ public class LogsActivity extends AppCompatActivity {
                 VehicleNumber vehicleNumber=(VehicleNumber) parent.getItemAtPosition(position);
                 valueFromSpinner=vehicleNumber.getNumber();
                 //Toast.makeText(LogsActivity.this, "hi"+valueFromSpinner, Toast.LENGTH_SHORT).show();
+
                 LogsAdapter adapter=new LogsAdapter(getApplicationContext(), arrNumber,valueFromSpinner);
+
                 recyclerView.setAdapter(adapter);
 //                for(int i=0;i<arrNumber.size();i++){
 //                    if(logsModel.getNumberPlate().equals(valueFromSpinner)){
@@ -137,6 +165,7 @@ public class LogsActivity extends AppCompatActivity {
 
 
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
